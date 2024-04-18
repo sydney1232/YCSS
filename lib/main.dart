@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:ycss/constants/onboarding_contents.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/widgets/build_dot.dart';
@@ -42,6 +43,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         padding: const EdgeInsets.all(40.0),
                         child: Column(
                           children: [
+                            Lottie.asset(contents[i].image),
                             Header1(text: contents[i].header),
                             SizedBox(height: 15),
                             Header2(text: contents[i].desc),
