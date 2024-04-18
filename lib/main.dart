@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ycss/constants/onboarding_contents.dart';
 import 'package:ycss/constants/string_constants.dart';
+import 'package:ycss/widgets/build_dot.dart';
 import 'package:ycss/widgets/text_widget_header_1.dart';
 import 'package:ycss/widgets/text_widget_header_2.dart';
 
@@ -20,6 +21,7 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,11 @@ class _WelcomePageState extends State<WelcomePage> {
         children: [
           Expanded(
             child: PageView.builder(
+              onPageChanged: (int index) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
               itemCount: contents.length,
               itemBuilder: (_, i) {
                 return Column(
@@ -43,6 +50,15 @@ class _WelcomePageState extends State<WelcomePage> {
                   ],
                 );
               },
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(contents.length, (index) {
+                return buildDot(index, currentIndex,
+                    context); // Customize this container as needed
+              }),
             ),
           ),
           Container(
