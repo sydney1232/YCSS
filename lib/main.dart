@@ -23,6 +23,20 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   int currentIndex = 0;
+  late PageController _controller;
+
+  @override
+  void initState() {
+    _controller = PageController(initialPage: 0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +44,7 @@ class _WelcomePageState extends State<WelcomePage> {
         children: [
           Expanded(
             child: PageView.builder(
+              controller: _controller,
               onPageChanged: (int index) {
                 setState(() {
                   currentIndex = index;
@@ -38,6 +53,7 @@ class _WelcomePageState extends State<WelcomePage> {
               itemCount: contents.length,
               itemBuilder: (_, i) {
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                         padding: const EdgeInsets.all(40.0),
@@ -69,10 +85,19 @@ class _WelcomePageState extends State<WelcomePage> {
             width: double.infinity,
             child: TextButton(
               child: Text(
-                "Next",
+                currentIndex != contents.length - 1
+                    ? "Continue"
+                    : "Let's Get Started",
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () {},
+              onPressed: () {
+                if (currentIndex == contents.length - 1) {
+                } else {
+                  _controller.nextPage(
+                      duration: Duration(microseconds: 1000),
+                      curve: Curves.bounceIn);
+                }
+              },
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Colors.deepOrange),
