@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ycss/constants/onboarding_contents.dart';
 import 'package:ycss/constants/string_constants.dart';
+import 'package:ycss/screens/login_screen.dart';
 import 'package:ycss/widgets/build_dot.dart';
 import 'package:ycss/widgets/text_widget_header_1.dart';
 import 'package:ycss/widgets/text_widget_header_2.dart';
@@ -92,6 +93,10 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
               onPressed: () {
                 if (currentIndex == contents.length - 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
                 } else {
                   _controller.nextPage(
                       duration: Duration(microseconds: 1000),
