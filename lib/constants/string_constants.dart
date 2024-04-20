@@ -1,2 +1,4 @@
-const String welcome_to_ycss_desc =
-    "Hey! Its the time of the year again. Welcome to Calvary Chapel Youth Conference 2024! It is always exciting to work with group of leaders and to worship the Lord!";
+const String LOGIN = "Login";
+const String SIGN_IN = "Sign in";
+const String SIGN_UP = "Sign up";
+const String DONT_HAVE_ACCOUNT = "Don't have an account?";
