@@ -5,6 +5,8 @@ import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/widgets/user_password_text_field.dart';
 import 'package:ycss/widgets/user_text_field.dart';
 
+import '../firebase_services/firebase_utils.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -14,32 +16,6 @@ class LoginPage extends StatefulWidget {
 
 final userTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
-
-void signUserIn() async {
-  try {
-    print(
-        "Logged email: ${userTextEditingController.text} password:${passwordTextEditingController.text}");
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: userTextEditingController.text,
-      password: passwordTextEditingController.text,
-    );
-  } catch (e) {
-    // Handle the error
-    if (e is FirebaseAuthException) {
-      // Firebase Authentication error
-      if (e.code == 'user-not-found') {
-        // Handle user not found error
-      } else if (e.code == 'wrong-password') {
-        // Handle wrong password error
-      } else {
-        // Handle other Firebase Authentication errors
-      }
-    } else {
-      // Handle non-Firebase Authentication errors
-      print('An unexpected error occurred: $e');
-    }
-  }
-}
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -86,7 +62,8 @@ class _LoginPageState extends State<LoginPage> {
                       LOGIN,
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    onPressed: signUserIn,
+                    onPressed: () => signUserIn(userTextEditingController.text,
+                        passwordTextEditingController.text),
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.deepOrange),
