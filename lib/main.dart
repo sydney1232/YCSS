@@ -1,17 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ycss/constants/onboarding_contents.dart';
 import 'package:ycss/constants/string_constants.dart';
+import 'package:ycss/firebase_options.dart';
+import 'package:ycss/firebase_services/AuthPage.dart';
 import 'package:ycss/screens/login_screen.dart';
 import 'package:ycss/widgets/build_dot.dart';
 import 'package:ycss/widgets/text_widget_header_1.dart';
 import 'package:ycss/widgets/text_widget_header_2.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: WelcomePage(),
+    home: AuthPage(),
   ));
 }
 

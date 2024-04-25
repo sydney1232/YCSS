@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "384550455329",
+    "project_id": "ycss-f7c20",
+    "storage_bucket": "ycss-f7c20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384550455329:android:d7ff5089bf8c1991de7b60",
+        "android_client_info": {
+          "package_name": "com.example.ycss"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQYVoGHdIiGuTkE79AsDmEHR566CzZ88A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
