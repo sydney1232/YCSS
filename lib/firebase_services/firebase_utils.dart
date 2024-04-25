@@ -23,3 +23,7 @@ signUserIn(String username, String password) async {
     }
   }
 }
+
+userSignOut() {
+  FirebaseAuth.instance.signOut();
+}
