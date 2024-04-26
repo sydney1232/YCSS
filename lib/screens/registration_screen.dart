@@ -1,25 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:ycss/constants/string_constants.dart';
-import 'package:ycss/screens/registration_screen.dart';
-import 'package:ycss/widgets/user_password_text_field.dart';
-import 'package:ycss/widgets/user_text_field.dart';
 
+import '../constants/string_constants.dart';
 import '../firebase_services/firebase_utils.dart';
+import '../widgets/user_password_text_field.dart';
+import '../widgets/user_text_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 final userTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +25,13 @@ class _LoginPageState extends State<LoginPage> {
           child: Center(
             child: Column(
               children: [
-                //Sign in
+                //Sign Up
                 Padding(
                     padding: const EdgeInsets.all(80),
                     child: Column(
                       children: [
                         Text(
-                          SIGN_IN,
+                          SIGN_UP,
                           style: TextStyle(fontSize: 28),
                         ),
                         const SizedBox(height: 70),
@@ -53,6 +50,11 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordTextEditingController,
                 ),
 
+                PasswordTextField(
+                  controller: passwordTextEditingController,
+                  hintText: "Confirm Password",
+                ),
+
                 const SizedBox(height: 30),
 
                 //Login
@@ -60,11 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 300,
                   height: 60,
                   child: TextButton(
-                    child: Text(
-                      LOGIN,
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
-                    onPressed: () => signUserIn(userTextEditingController.text,
+                    onPressed: () => signUserUp(userTextEditingController.text,
                         passwordTextEditingController.text),
                     style: ButtonStyle(
                       backgroundColor:
@@ -76,33 +74,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                    child: const Text(
+                      REGISTER,
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
                   ),
                 ),
 
                 const SizedBox(height: 50),
-
-                //Dont have account
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
-                    DONT_HAVE_ACCOUNT,
-                    style: TextStyle(color: Colors.deepOrange),
-                  ),
-                  const SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RegistrationPage()));
-                    },
-                    child: Text(
-                      SIGN_UP,
-                      style: TextStyle(
-                          color: Colors.deepOrange,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ]),
               ],
             ),
           ),
