@@ -45,6 +45,14 @@ class _DashboardPageState extends State<DashboardPage> {
                         .titleMedium
                         ?.copyWith(color: Colors.white54),
                   ),
+                  trailing: const IconButton(
+                    onPressed: userSignOut,
+                    icon: Icon(
+                      size: 30,
+                      Icons.exit_to_app,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 30),
               ],
