@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ycss/firebase_services/firebase_utils.dart';
+import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
 
@@ -13,6 +14,8 @@ class DashboardPage extends StatefulWidget {
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
+
+final currentUser = FirebaseAuth.instance.currentUser!;
 
 class _DashboardPageState extends State<DashboardPage> {
   @override
@@ -107,7 +110,12 @@ class _DashboardPageState extends State<DashboardPage> {
                       name: "Ranking",
                       backgroundcolor: Colors.red,
                       icon: Icons.bar_chart,
-                      onPress: () {},
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TeamRanking()));
+                      },
                     ),
                   ],
                 ),
