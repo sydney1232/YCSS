@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/screens/registration_screen.dart';
 import 'package:ycss/widgets/user_password_text_field.dart';
@@ -20,6 +21,39 @@ final userTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
 
 class _LoginPageState extends State<LoginPage> {
+  signUserIn(String username, String password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: username,
+        password: password,
+      );
+
+      //We create another function to avoid accessing context in a async flow
+      navigateToDashboard(true);
+    } catch (e) {
+      // Handle the error
+      if (e is FirebaseAuthException) {
+        // Firebase Authentication error
+        if (e.code == 'user-not-found') {
+          // Handle user not found error
+        } else if (e.code == 'wrong-password') {
+          // Handle wrong password error
+        } else {
+          // Handle other Firebase Authentication errors
+        }
+      } else {
+        // Handle non-Firebase Authentication errors
+        print('An unexpected error occurred: $e');
+      }
+    }
+  }
+
+  void navigateToDashboard(bool success) {
+    if (success) {
+      Navigator.pushReplacementNamed(context, kDashboardPage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

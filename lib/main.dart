@@ -28,6 +28,7 @@ void main() async {
     debugShowCheckedModeBanner: false,
     home: AuthPage(),
     routes: {
+      kWelcomePage: (context) => WelcomePage(),
       kDashboardPage: (context) => DashboardPage(),
       kLoginPage: (context) => LoginPage(),
       kRegistrationPage: (context) => RegistrationPage(),

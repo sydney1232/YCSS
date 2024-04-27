@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/firebase_services/firebase_utils.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
@@ -15,10 +16,13 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-final currentUser = FirebaseAuth.instance.currentUser!;
-
 class _DashboardPageState extends State<DashboardPage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+  userSignOut() {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, kLoginPage);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +55,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         .titleMedium
                         ?.copyWith(color: Colors.white54),
                   ),
-                  trailing: const IconButton(
+                  trailing: IconButton(
                     onPressed: userSignOut,
                     icon: Icon(
                       size: 30,

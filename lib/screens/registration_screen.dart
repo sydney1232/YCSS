@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/key_navigation.dart';
 import '../constants/string_constants.dart';
 import '../firebase_services/firebase_utils.dart';
 import '../widgets/user_password_text_field.dart';
@@ -17,6 +19,30 @@ final userTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  signUserUp(String email, String password) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      navigateToDashboard(true);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void navigateToDashboard(bool success) {
+    if (success) {
+      Navigator.pushReplacementNamed(context, kDashboardPage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
