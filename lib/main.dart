@@ -3,11 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/constants/onboarding_contents.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/firebase_options.dart';
 import 'package:ycss/firebase_services/AuthPage.dart';
+import 'package:ycss/screens/dashboard_screen.dart';
 import 'package:ycss/screens/login_screen.dart';
+import 'package:ycss/screens/registration_screen.dart';
+import 'package:ycss/screens/team_ranking_screen.dart';
+import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/build_dot.dart';
 import 'package:ycss/widgets/text_widget_header_1.dart';
 import 'package:ycss/widgets/text_widget_header_2.dart';
@@ -22,6 +27,13 @@ void main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: AuthPage(),
+    routes: {
+      kDashboardPage: (context) => DashboardPage(),
+      kLoginPage: (context) => LoginPage(),
+      kRegistrationPage: (context) => RegistrationPage(),
+      kTeamScreen: (context) => TeamScreen(),
+      kTeamRanking: (context) => TeamRanking(),
+    },
   ));
 }
 
