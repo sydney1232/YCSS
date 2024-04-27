@@ -18,6 +18,7 @@ class DashboardPage extends StatefulWidget {
 final currentUser = FirebaseAuth.instance.currentUser!;
 
 class _DashboardPageState extends State<DashboardPage> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

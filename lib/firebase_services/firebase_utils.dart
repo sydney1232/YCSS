@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-final currentUser = FirebaseAuth.instance.currentUser!;
-
 signUserIn(String username, String password) async {
   try {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
