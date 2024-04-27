@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ycss/firebase_services/firebase_utils.dart';
+import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -82,21 +84,30 @@ class _DashboardPageState extends State<DashboardPage> {
                       name: "Update Score",
                       backgroundcolor: Colors.grey,
                       icon: Icons.scoreboard,
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TeamScreen()));
+                      },
                     ),
                     ItemTile(
                       name: "Capture the Flag",
                       backgroundcolor: Colors.orange,
                       icon: Icons.flag,
+                      onPress: () {},
                     ),
                     ItemTile(
                       name: "Score Logs",
                       backgroundcolor: Colors.yellow,
                       icon: Icons.history,
+                      onPress: () {},
                     ),
                     ItemTile(
                       name: "Ranking",
                       backgroundcolor: Colors.red,
                       icon: Icons.bar_chart,
+                      onPress: () {},
                     ),
                   ],
                 ),
