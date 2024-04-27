@@ -9,9 +9,9 @@ class OnboardingContents {
 
 List<OnboardingContents> contents = [
   OnboardingContents(
-    header: "Youth Conference 2024",
+    header: "RUN 2024",
     desc:
-        "Hey! Its the time of the year again. Welcome to Calvary Chapel Youth Conference 2024! It is always exciting to work with group of leaders and worship the Lord!",
+        "Welcome to Calvary Chapel Youth Conference 2024! It is always exciting to work with group of leaders and worship the Lord!",
     image: "assets/scoreball.json",
   ),
   OnboardingContents(
@@ -23,7 +23,7 @@ List<OnboardingContents> contents = [
   OnboardingContents(
     header: "Score with Joy!",
     desc:
-        "Let’s embrace each moment as an opportunity to honor the Lord with Joy! \"Worship the Lord with gladness; come before him with joyful songs. Know that the Lord is God. It is he who made us, and we are his. We are his people, The sheep of his pasture. \" -Psalm 100:2-3  ",
+        "\"Worship the Lord with gladness; come before him with joyful songs. Know that the Lord is God. It is he who made us, and we are his. We are his people, The sheep of his pasture. \" -Psalm 100:2-3  ",
     image: "assets/scoreball.json",
   ),
 ];

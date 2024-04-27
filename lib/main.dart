@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ycss/constants/color_palette.dart';
 import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/constants/onboarding_contents.dart';
-import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/firebase_options.dart';
 import 'package:ycss/firebase_services/AuthPage.dart';
 import 'package:ycss/screens/dashboard_screen.dart';
@@ -80,12 +79,12 @@ class _WelcomePageState extends State<WelcomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.all(40.0),
+                        padding: const EdgeInsets.all(30.0),
                         child: Column(
                           children: [
                             Lottie.asset(contents[i].image),
                             Header1(text: contents[i].header),
-                            SizedBox(height: 15),
+                            SizedBox(height: 20),
                             Header2(text: contents[i].desc),
                           ],
                         )),
@@ -94,17 +93,15 @@ class _WelcomePageState extends State<WelcomePage> {
               },
             ),
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(contents.length, (index) {
-                return buildDot(index, currentIndex,
-                    context); // Customize this container as needed
-              }),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(contents.length, (index) {
+              return buildDot(index, currentIndex,
+                  context); // Customize this container as needed
+            }),
           ),
           Container(
-            height: 60,
+            height: 50,
             margin: EdgeInsets.all(40),
             width: double.infinity,
             child: TextButton(
@@ -112,7 +109,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 currentIndex != contents.length - 1
                     ? "Continue"
                     : "Let's Get Started",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: white, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 if (currentIndex == contents.length - 1) {
@@ -127,8 +124,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 }
               },
               style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.deepOrange),
+                backgroundColor: MaterialStateProperty.all<Color>(lightPink),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/constants/color_palette.dart';
 
 class Header1 extends StatefulWidget {
   String text;
@@ -17,8 +17,8 @@ class _Header1State extends State<Header1> {
       textAlign: TextAlign.left,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 28,
-        color: Colors.black,
+        fontSize: 32,
+        color: lightPink,
       ),
     );
   }
