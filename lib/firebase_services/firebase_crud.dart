@@ -15,4 +15,10 @@ class FirestoreService {
     final teamStream = teams.orderBy('score', descending: true).snapshots();
     return teamStream;
   }
+
+  Future<void> updateScore(String docID, int newScore) {
+    return teams.doc(docID).update({
+      'score': newScore,
+    });
+  }
 }
