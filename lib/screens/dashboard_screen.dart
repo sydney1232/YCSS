@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ycss/constants/key_navigation.dart';
-import 'package:ycss/firebase_services/firebase_utils.dart';
+import 'package:ycss/screens/capture_the_flag_screen.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
@@ -103,7 +100,12 @@ class _DashboardPageState extends State<DashboardPage> {
                       name: "Capture the Flag",
                       backgroundcolor: Colors.orange,
                       icon: Icons.flag,
-                      onPress: () {},
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CaptureFlagPage()));
+                      },
                     ),
                     ItemTile(
                       name: "Score Logs",
