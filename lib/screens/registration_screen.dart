@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/key_navigation.dart';
 import '../constants/string_constants.dart';
-import '../firebase_services/firebase_utils.dart';
 import '../widgets/user_password_text_field.dart';
 import '../widgets/user_text_field.dart';
 
@@ -21,6 +19,15 @@ final passwordTextEditingController = TextEditingController();
 class _RegistrationPageState extends State<RegistrationPage> {
   signUserUp(String email, String password) async {
     try {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            );
+          });
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,

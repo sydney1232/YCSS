@@ -1,14 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/screens/registration_screen.dart';
 import 'package:ycss/widgets/user_password_text_field.dart';
 import 'package:ycss/widgets/user_text_field.dart';
-
-import '../firebase_services/firebase_utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,6 +19,15 @@ final passwordTextEditingController = TextEditingController();
 class _LoginPageState extends State<LoginPage> {
   signUserIn(String username, String password) async {
     try {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            );
+          });
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: username,
         password: password,
