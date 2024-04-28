@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/screens/capture_the_flag_screen.dart';
+import 'package:ycss/screens/score_log_screen.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
@@ -111,7 +112,12 @@ class _DashboardPageState extends State<DashboardPage> {
                       name: "Score Logs",
                       backgroundcolor: Colors.yellow,
                       icon: Icons.history,
-                      onPress: () {},
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ScoreLogsScreen()));
+                      },
                     ),
                     ItemTile(
                       name: "Ranking",

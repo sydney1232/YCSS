@@ -34,6 +34,13 @@ class FirestoreService {
     });
   }
 
+  Stream<QuerySnapshot> getScoreLogsByTimestamp() {
+    //final teamStream = teams.orderBy('score', descending: true).snapshots();
+    final logScoreStrem =
+        scorelogs.orderBy('timestamp', descending: true).snapshots();
+    return logScoreStrem;
+  }
+
   void addScoreToFirestore(int scoreAdded, int newScore, String docID,
       String scoreAuthor, String teamName, int currentScore) {
     //Upload Score
