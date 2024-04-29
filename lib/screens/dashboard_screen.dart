@@ -7,6 +7,8 @@ import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
 
+import '../constants/string_constants.dart';
+
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
@@ -23,6 +25,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isAdmin() {
+      return currentUser.email == ADMIN;
+    }
+
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.zero,
@@ -119,17 +125,18 @@ class _DashboardPageState extends State<DashboardPage> {
                                 builder: (context) => const ScoreLogsScreen()));
                       },
                     ),
-                    ItemTile(
-                      name: "Ranking",
-                      backgroundcolor: Colors.red,
-                      icon: Icons.bar_chart,
-                      onPress: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TeamRanking()));
-                      },
-                    ),
+                    if (isAdmin())
+                      ItemTile(
+                        name: "Ranking",
+                        backgroundcolor: Colors.red,
+                        icon: Icons.bar_chart,
+                        onPress: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const TeamRanking()));
+                        },
+                      ),
                   ],
                 ),
               ]),
