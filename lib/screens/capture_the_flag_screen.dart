@@ -70,7 +70,7 @@ class _CaptureFlagPageState extends State<CaptureFlagPage> {
 
                   return ListTile(
                     title: Text(teamText),
-                    onTap: () {
+                    onLongPress: () {
                       showConfirmationDialog(docID, teamText, currentScore);
                     },
                   );
