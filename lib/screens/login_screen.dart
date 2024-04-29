@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/screens/registration_screen.dart';
+import 'package:ycss/widgets/login_register_dialogs.dart';
 import 'package:ycss/widgets/user_password_text_field.dart';
 import 'package:ycss/widgets/user_text_field.dart';
 
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 
 final userTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
+DialogServices dialogServices = DialogServices();
 
 class _LoginPageState extends State<LoginPage> {
   signUserIn(String username, String password) async {
@@ -39,12 +41,16 @@ class _LoginPageState extends State<LoginPage> {
       // Handle the error
       if (e is FirebaseAuthException) {
         // Firebase Authentication error
+        Navigator.pop(context);
         if (e.code == 'user-not-found') {
           // Handle user not found error
+          dialogServices.userNotFound(context);
         } else if (e.code == 'wrong-password') {
           // Handle wrong password error
+          dialogServices.wrongPassword(context);
         } else {
           // Handle other Firebase Authentication errors
+          dialogServices.invalidInput(context);
         }
       } else {
         // Handle non-Firebase Authentication errors

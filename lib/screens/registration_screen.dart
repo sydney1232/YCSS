@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/widgets/login_register_dialogs.dart';
 
 import '../constants/key_navigation.dart';
 import '../constants/string_constants.dart';
@@ -15,6 +16,7 @@ class RegistrationPage extends StatefulWidget {
 
 final userTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
+final DialogServices dialogServices = DialogServices();
 
 class _RegistrationPageState extends State<RegistrationPage> {
   signUserUp(String email, String password) async {
@@ -32,12 +34,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
         email: email,
         password: password,
       );
-      navigateToDashboard(true);
+      Navigator.pop(context);
+      dialogServices.registrationSuccessful(
+          context, email, () => navigateToDashboard(true));
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      Navigator.pop(context);
+      if (e.code == 'email-already-in-use') {
+        //Handle password to weak
+        dialogServices.userAlreadyExisting(context);
+      } else if (e.code == 'weak-password') {
+        //Handle email already exists
+        dialogServices.weakPassword(context);
+      } else {
+        dialogServices.invalidInput(context);
       }
     } catch (e) {
       print(e);
