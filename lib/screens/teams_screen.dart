@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/firebase_services/firebase_crud.dart';
+import 'package:ycss/widgets/team_tile.dart';
 
 class TeamScreen extends StatefulWidget {
   const TeamScreen({super.key});
@@ -50,7 +52,7 @@ class _TeamScreenState extends State<TeamScreen> {
   }
 
   void openDialogDeductScore(
-      BuildContext context, String? docID, int currentScore, String teamName) {
+      BuildContext context, String? docID, String teamName, int currentScore) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -85,55 +87,116 @@ class _TeamScreenState extends State<TeamScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-        stream: firestoreService.getTeamsStreamByID(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List teamList = snapshot.data!.docs;
-            return ListView.builder(
-                itemCount: teamList.length,
-                itemBuilder: (context, index) {
-                  //get individual doc
-                  DocumentSnapshot document = teamList[index];
-                  String docID = document.id;
+      body: Column(children: [
+        Padding(
+            padding: EdgeInsets.only(top: 80),
+            child: Text(
+              SELECT_TEAM_UPDATE_SCORE,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
+            )),
+        Expanded(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: firestoreService.getTeamsStreamByID(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List teamList = snapshot.data!.docs;
+                return ListView.builder(
+                    itemCount: (teamList.length / 3).ceil(),
+                    itemBuilder: (context, index) {
+                      final lastRow = index == (teamList.length / 3).ceil() - 1;
+                      //get individual doc
+                      DocumentSnapshot document = teamList[index];
+                      String docID = document.id;
 
-                  //get team for each doc
-                  Map<String, dynamic> data =
-                      document.data() as Map<String, dynamic>;
+                      //get team for each doc
+                      Map<String, dynamic> data =
+                          document.data() as Map<String, dynamic>;
 
-                  //Get data for each item
-                  String teamText = data['teamName'];
-                  int currentScore = data['score'];
-
-                  return ListTile(
-                    title: Text(teamText),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize
-                          .min, // To make the Row as small as possible
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            openDialogAddScore(
-                                context, docID, teamText, currentScore);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            openDialogDeductScore(
-                                context, docID, currentScore, teamText);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                });
-          } else {
-            return Center(child: const Text("No Teams"));
-          }
-        },
+                      //Get data for each item
+                      String teamText = data['teamName'];
+                      int currentScore = data['score'];
+                      return Row(
+                        mainAxisAlignment: lastRow
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        children: [
+                          for (int i = index * 3; i < (index + 1) * 3; i++)
+                            if (i < teamList.length)
+                              if (i < teamList.length)
+                                i == 9
+                                    ? // Check if it's the 10th tile
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3, // Adjust size
+                                        child: Column(
+                                          children: [
+                                            TeamTile(
+                                              teamName: teamList[i]['teamName'],
+                                              onAddPressed: () =>
+                                                  openDialogAddScore(
+                                                      context,
+                                                      teamList[i].id,
+                                                      teamList[i]['teamName'],
+                                                      teamList[i]['score']),
+                                              onRemovePressed: () =>
+                                                  openDialogDeductScore(
+                                                context,
+                                                teamList[i].id,
+                                                teamList[i]['teamName'],
+                                                teamList[i]['score'],
+                                              ),
+                                            ),
+                                            const SizedBox(height: 150),
+                                          ],
+                                        ),
+                                      )
+                                    : Expanded(
+                                        child: TeamTile(
+                                          teamName: teamList[i]['teamName'],
+                                          onAddPressed: () =>
+                                              openDialogAddScore(
+                                                  context,
+                                                  teamList[i].id,
+                                                  teamList[i]['teamName'],
+                                                  teamList[i]['score']),
+                                          onRemovePressed: ()=>openDialogDeductScore(
+                                            context,
+                                            teamList[i].id,
+                                            teamList[i]['teamName'],
+                                            teamList[i]['score'],
+                                          ),
+                                        ),
+                                      ),
+                        ],
+                      );
+                    });
+              } else {
+                return Center(child: const Text("No Teams"));
+              }
+            },
+          ),
+        ),
+      ]),
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(bottom: 50),
+        height: 70,
+        width: 70,
+        child: FloatingActionButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            size: 40,
+            Icons.home,
+            color: Colors.black,
+          ),
+        ),
       ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 }
