@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/color_palette.dart';
 
 class PasswordTextField extends StatefulWidget {
   TextEditingController controller;
@@ -26,12 +27,15 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             controller: widget.controller,
             obscureText: true,
             keyboardType: TextInputType.emailAddress,
-            cursorColor: Colors.deepOrange,
+            cursorColor: lightPink,
             decoration: InputDecoration(
               hintText: widget.hintText ?? "Password",
               prefixIcon: const Padding(
                 padding: EdgeInsets.only(left: 16, right: 8),
-                child: Icon(Icons.lock),
+                child: Icon(
+                  Icons.lock,
+                  color: Color(0xFF0D47A1),
+                ),
               ),
               contentPadding:
                   EdgeInsets.symmetric(vertical: 16, horizontal: 16),

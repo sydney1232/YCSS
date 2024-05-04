@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:ycss/constants/color_palette.dart';
 
 class UserNameTextField extends StatefulWidget {
   TextEditingController controller;
@@ -23,14 +22,18 @@ class _UserNameTextFieldState extends State<UserNameTextField> {
             borderRadius: BorderRadius.circular(20.0), // Add rounded corners
           ),
           child: TextFormField(
+            style: TextStyle(color: lightPink),
             controller: widget.controller,
             keyboardType: TextInputType.emailAddress,
-            cursorColor: Colors.deepOrange,
+            cursorColor: lightPink,
             decoration: const InputDecoration(
               hintText: "Username",
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 8),
-                child: Icon(Icons.person),
+                child: Icon(
+                  Icons.person,
+                  color: Color(0xFF0D47A1),
+                ), //Using this color code since it is expecting a PrimarySwatch value
               ),
               contentPadding:
                   EdgeInsets.symmetric(vertical: 16, horizontal: 16),
