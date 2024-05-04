@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/constants/color_palette.dart';
 import 'package:ycss/widgets/login_register_dialogs.dart';
 
 import '../constants/key_navigation.dart';
@@ -62,6 +63,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: blue,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -74,13 +76,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       children: [
                         Text(
                           SIGN_UP,
-                          style: TextStyle(fontSize: 28),
+                          style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: lightPink),
                         ),
                         const SizedBox(height: 70),
-                        Icon(
-                          Icons.lock,
-                          size: 120,
-                        ),
+                        Image.asset("assets/run.png"),
                       ],
                     )),
 
@@ -108,7 +110,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         passwordTextEditingController.text),
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.deepOrange),
+                          MaterialStateProperty.all<Color>(lightPink),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
