@@ -68,4 +68,11 @@ class FirestoreService {
     addScoreLogging(
         "$scoreAuthor deducted ${scoreDeducted}pts to $teamName, from ${currentScore}pts to ${newScore}pts on $phTime, \n\n Reason: $reason");
   }
+
+  void addScoreFlagCapturedDeductionToFirestore(
+      String teamName, int scoreDeduct, String scoreAuthor) {
+    String phTime = getLocalDateAndTime();
+    addScoreLogging(
+        "$teamName's flag has been captured. ${scoreDeduct}pts deducted by $scoreAuthor on $phTime");
+  }
 }

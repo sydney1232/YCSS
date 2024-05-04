@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/widgets/team_capture_flag_tile.dart';
@@ -16,6 +17,8 @@ class CaptureFlagPage extends StatefulWidget {
 final FirestoreService firestoreService = FirestoreService();
 
 class _CaptureFlagPageState extends State<CaptureFlagPage> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
   void showConfirmationDialog(String docID, String teamName, int currentScore) {
     AwesomeDialog(
       context: context,
@@ -26,8 +29,11 @@ class _CaptureFlagPageState extends State<CaptureFlagPage> {
       desc: "${teamName} will be deducted 50 points. ",
       btnCancelOnPress: () {},
       btnOkOnPress: () {
-        int newScore = currentScore - 50;
+        int scoreDeduct = 50;
+        int newScore = currentScore - scoreDeduct;
         firestoreService.updateScore(docID, newScore);
+        firestoreService.addScoreFlagCapturedDeductionToFirestore(
+            teamName, scoreDeduct, currentUser.email.toString());
         showSuccessDialog(teamName);
       },
       btnOkText: "Confirm",
