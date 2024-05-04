@@ -7,6 +7,8 @@ import 'package:ycss/widgets/login_register_dialogs.dart';
 import 'package:ycss/widgets/user_password_text_field.dart';
 import 'package:ycss/widgets/user_text_field.dart';
 
+import '../constants/color_palette.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -68,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: blue,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -80,13 +83,18 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text(
                           SIGN_IN,
-                          style: TextStyle(fontSize: 28),
+                          style: TextStyle(
+                              fontSize: 28,
+                              color: lightPink,
+                              fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 70),
-                        Icon(
-                          Icons.lock,
-                          size: 120,
-                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          child: Image.asset(
+                            "assets/run.png",
+                          ),
+                        )
                       ],
                     )),
 
@@ -113,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                         passwordTextEditingController.text),
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.deepOrange),
+                          MaterialStateProperty.all<Color>(lightPink),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -130,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
                     DONT_HAVE_ACCOUNT,
-                    style: TextStyle(color: Colors.deepOrange),
+                    style: TextStyle(color: lightPink),
                   ),
                   const SizedBox(width: 5),
                   GestureDetector(
@@ -143,11 +151,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       SIGN_UP,
                       style: TextStyle(
-                          color: Colors.deepOrange,
-                          fontWeight: FontWeight.bold),
+                          color: lightPink, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ]),
+                const SizedBox(height: 70),
               ],
             ),
           ),

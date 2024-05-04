@@ -70,6 +70,7 @@ flutter:
   - assets/scoreball.json
   - assets/leaderboard.png
   - assets/line.png
+  - assets/run.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
