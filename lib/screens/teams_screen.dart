@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/constants/color_palette.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/firebase_services/firebase_crud.dart';
 import 'package:ycss/widgets/team_tile.dart';
@@ -184,6 +185,7 @@ class _TeamScreenState extends State<TeamScreen> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
+          backgroundColor: blue,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
           onPressed: () {
@@ -192,7 +194,7 @@ class _TeamScreenState extends State<TeamScreen> {
           child: Icon(
             size: 40,
             Icons.home,
-            color: Colors.black,
+            color: lightPink,
           ),
         ),
       ),
