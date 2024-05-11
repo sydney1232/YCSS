@@ -32,7 +32,7 @@ class _TeamScreenState extends State<TeamScreen> {
                   onPressed: () {
                     int newScore =
                         currentScore + int.parse(textController.text);
-                    String scoreAuthor = currentUser.email.toString();
+                    String scoreAuthor = currentUser.displayName.toString();
                     int scoreAdded = int.parse(textController.text);
                     firestoreService.addScoreToFirestore(
                       scoreAdded,
@@ -66,7 +66,7 @@ class _TeamScreenState extends State<TeamScreen> {
                       int newScore =
                           currentScore - int.parse(textController.text);
                       int scoreDeducted = int.parse(textController.text);
-                      String scoreAuthor = currentUser.email.toString();
+                      String scoreAuthor = currentUser.displayName.toString();
                       String reason = "No reason for now";
                       firestoreService.addScoreDeductionToFirestore(
                           scoreDeducted,
@@ -160,7 +160,8 @@ class _TeamScreenState extends State<TeamScreen> {
                                                   teamList[i].id,
                                                   teamList[i]['teamName'],
                                                   teamList[i]['score']),
-                                          onRemovePressed: ()=>openDialogDeductScore(
+                                          onRemovePressed: () =>
+                                              openDialogDeductScore(
                                             context,
                                             teamList[i].id,
                                             teamList[i]['teamName'],

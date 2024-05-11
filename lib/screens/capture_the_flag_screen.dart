@@ -33,7 +33,7 @@ class _CaptureFlagPageState extends State<CaptureFlagPage> {
         int newScore = currentScore - scoreDeduct;
         firestoreService.updateScore(docID, newScore);
         firestoreService.addScoreFlagCapturedDeductionToFirestore(
-            teamName, scoreDeduct, currentUser.email.toString());
+            teamName, scoreDeduct, currentUser.displayName.toString());
         showSuccessDialog(teamName);
       },
       btnOkText: "Confirm",
