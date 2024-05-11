@@ -16,6 +16,34 @@ class DialogServices {
     ).show();
   }
 
+  void missingTextFields(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Missing Fields",
+      desc: "Make sure to Input all missing fields",
+      btnOkOnPress: () {},
+      btnOkColor: Colors.yellow,
+      btnOkText: "Okay",
+    ).show();
+  }
+
+  void passwordDoesNotMatch(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Password does not match",
+      desc: "Make sure password matches the confirmed password",
+      btnOkOnPress: () {},
+      btnOkColor: Colors.red,
+      btnOkText: "Okay",
+    ).show();
+  }
+
   void wrongPassword(BuildContext context) {
     AwesomeDialog(
       context: context,
