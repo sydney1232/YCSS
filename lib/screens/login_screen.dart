@@ -68,6 +68,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    userTextEditingController.text = "";
+    passwordTextEditingController.text = "";
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: blue,
