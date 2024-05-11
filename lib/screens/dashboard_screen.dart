@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/constants/color_palette.dart';
 import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/screens/capture_the_flag_screen.dart';
 import 'package:ycss/screens/score_log_screen.dart';
@@ -25,6 +26,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    String userName = currentUser.displayName ?? 'User';
     bool isAdmin() {
       return currentUser.email == ADMIN;
     }
@@ -46,18 +48,18 @@ class _DashboardPageState extends State<DashboardPage> {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 30),
                   title: Text(
-                    "Hi! ${currentUser.displayName!}",
+                    "Hi, $userName!",
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
-                        ?.copyWith(color: Colors.white),
+                        ?.copyWith(color: lightPink),
                   ),
                   subtitle: Text(
                     "Welcome back",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: Colors.white54),
+                        ?.copyWith(color: yellowOrange2),
                   ),
                   trailing: IconButton(
                     onPressed: userSignOut,
