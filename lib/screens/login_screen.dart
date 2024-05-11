@@ -99,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                     )),
 
                 UserNameTextField(
+                  hintText: EMAIL,
                   controller: userTextEditingController,
                 ),
 

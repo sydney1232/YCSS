@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ycss/constants/color_palette.dart';
+import 'package:ycss/constants/string_constants.dart';
 
 class UserNameTextField extends StatefulWidget {
   TextEditingController controller;
-  UserNameTextField({super.key, required this.controller});
+  String hintText;
+  UserNameTextField(
+      {super.key, required this.controller, required this.hintText});
 
   @override
   State<UserNameTextField> createState() => _UserNameTextFieldState();
@@ -26,12 +29,12 @@ class _UserNameTextFieldState extends State<UserNameTextField> {
             controller: widget.controller,
             keyboardType: TextInputType.emailAddress,
             cursorColor: lightPink,
-            decoration: const InputDecoration(
-              hintText: "Username",
+            decoration: InputDecoration(
+              hintText: widget.hintText,
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 8),
                 child: Icon(
-                  Icons.person,
+                  widget.hintText == EMAIL ? Icons.mail : Icons.person,
                   color: Color(0xFF0D47A1),
                 ), //Using this color code since it is expecting a PrimarySwatch value
               ),

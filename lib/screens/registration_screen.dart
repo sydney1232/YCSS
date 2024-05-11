@@ -15,12 +15,13 @@ class RegistrationPage extends StatefulWidget {
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-final userTextEditingController = TextEditingController();
+final userEmailTextEditingController = TextEditingController();
+final userNameTextEditingController = TextEditingController();
 final passwordTextEditingController = TextEditingController();
 final DialogServices dialogServices = DialogServices();
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  signUserUp(String email, String password) async {
+  signUserUp(String email, String password, String username) async {
     try {
       showDialog(
           context: context,
@@ -31,10 +32,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             );
           });
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+
+      //Register Email and Password
+      UserCredential result =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      //Register Display Name
+      User? user = result.user;
+      user?.updateDisplayName(username);
+
       Navigator.pop(context);
       dialogServices.registrationSuccessful(
           context, email, () => navigateToDashboard(true));
@@ -87,7 +96,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     )),
 
                 UserNameTextField(
-                  controller: userTextEditingController,
+                  controller: userEmailTextEditingController,
+                  hintText: EMAIL,
+                ),
+
+                UserNameTextField(
+                  controller: userNameTextEditingController,
+                  hintText: USERNAME,
                 ),
 
                 PasswordTextField(
@@ -106,8 +121,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   width: 300,
                   height: 60,
                   child: TextButton(
-                    onPressed: () => signUserUp(userTextEditingController.text,
-                        passwordTextEditingController.text),
+                    onPressed: () => signUserUp(
+                        userEmailTextEditingController.text,
+                        passwordTextEditingController.text,
+                        userNameTextEditingController.text),
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(lightPink),

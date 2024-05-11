@@ -46,7 +46,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 30),
                   title: Text(
-                    "Hi! ${currentUser.email!}",
+                    "Hi! ${currentUser.displayName!}",
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
