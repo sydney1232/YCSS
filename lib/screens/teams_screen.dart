@@ -20,6 +20,8 @@ final TextEditingController reasonTextController = TextEditingController();
 class _TeamScreenState extends State<TeamScreen> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
+  GlobalKey<FormState> _formKeyAddScore = GlobalKey<FormState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -37,7 +39,7 @@ class _TeamScreenState extends State<TeamScreen> {
         builder: (context) => AlertDialog(
               content: SizedBox(
                 child: SizedBox(
-                  height: 100,
+                  height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,14 +50,27 @@ class _TeamScreenState extends State<TeamScreen> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 20),
-                      Column(children: [
-                        TextField(
-                          decoration:
-                              const InputDecoration(hintText: "Add score here"),
-                          keyboardType: TextInputType.number,
-                          controller: textController,
-                        ),
-                      ]),
+                      Form(
+                        key: _formKeyAddScore,
+                        child: Column(children: [
+                          TextFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Add score here"),
+                            keyboardType: TextInputType.number,
+                            controller: textController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a score';
+                              }
+                              int? parsedScore = int.tryParse(value);
+                              if (parsedScore == null || parsedScore <= 0) {
+                                return 'Please enter a valid positive number';
+                              }
+                              return null; // Return null if the input is valid
+                            },
+                          ),
+                        ]),
+                      ),
                     ],
                   ),
                 ),
@@ -63,20 +78,22 @@ class _TeamScreenState extends State<TeamScreen> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    int newScore =
-                        currentScore + int.parse(textController.text);
-                    String scoreAuthor = currentUser.displayName.toString();
-                    int scoreAdded = int.parse(textController.text);
-                    firestoreService.addScoreToFirestore(
-                      scoreAdded,
-                      newScore,
-                      docID!,
-                      scoreAuthor,
-                      teamName,
-                      currentScore,
-                    );
-                    textController.clear();
-                    Navigator.pop(context);
+                    if (_formKeyAddScore.currentState!.validate()) {
+                      int newScore =
+                          currentScore + int.parse(textController.text);
+                      String scoreAuthor = currentUser.displayName.toString();
+                      int scoreAdded = int.parse(textController.text);
+                      firestoreService.addScoreToFirestore(
+                        scoreAdded,
+                        newScore,
+                        docID!,
+                        scoreAuthor,
+                        teamName,
+                        currentScore,
+                      );
+                      textController.clear();
+                      Navigator.pop(context);
+                    }
                   },
                   child: const Text("Add"),
                 )
