@@ -21,6 +21,8 @@ class _TeamScreenState extends State<TeamScreen> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
   GlobalKey<FormState> _formKeyAddScore = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKeyDeductScore = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKeyReason = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -107,72 +109,93 @@ class _TeamScreenState extends State<TeamScreen> {
     textController.text = '';
     reasonTextController.text = '';
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              content: SizedBox(
-                child: SizedBox(
-                  height: 350,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Deduct score to $teamName",
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Subtract score here",
-                        ),
-                        keyboardType: TextInputType.number,
-                        controller: textController,
-                      ),
-                      const SizedBox(height: 20),
-                      const Center(
-                        child: Text(
-                          "Reason",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Add statement here",
-                          // Adjust height to center vertically
-                        ),
-                        keyboardType: TextInputType.text,
-                        controller: reasonTextController,
-                        minLines: 7,
-                        maxLines: null,
-                      )
-                    ],
+      context: context,
+      builder: (context) => AlertDialog(
+        content: SizedBox(
+          height: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Deduct score to $teamName",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              Form(
+                key: _formKeyDeductScore,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Subtract score here",
                   ),
+                  keyboardType: TextInputType.number,
+                  controller: textController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter point(s) to subtract";
+                    }
+                    int? parsedScore = int.tryParse(value);
+                    if ((parsedScore == null || parsedScore <= 0)) {
+                      return "Please enter a positive score";
+                    }
+                    return null;
+                  },
                 ),
               ),
-              actions: [
-                ElevatedButton(
-                    onPressed: () {
-                      int newScore =
-                          currentScore - int.parse(textController.text);
-                      int scoreDeducted = int.parse(textController.text);
-                      String scoreAuthor = currentUser.displayName.toString();
-                      String reason = reasonTextController.text;
-                      firestoreService.addScoreDeductionToFirestore(
-                          scoreDeducted,
-                          newScore,
-                          docID!,
-                          scoreAuthor,
-                          teamName,
-                          currentScore,
-                          reason);
-                      textController.clear();
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Deduct"))
-              ],
-            ));
+              SizedBox(height: 20),
+              Center(
+                child: Text(
+                  "Reason",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Form(
+                key: _formKeyReason,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Add statement here",
+                  ),
+                  keyboardType: TextInputType.text,
+                  controller: reasonTextController,
+                  minLines: 7,
+                  maxLines: null,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Statement Required";
+                    }
+                    return null;
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              if (_formKeyDeductScore.currentState!.validate() &&
+                  _formKeyReason.currentState!.validate()) {
+                int newScore = currentScore - int.parse(textController.text);
+                int scoreDeducted = int.parse(textController.text);
+                String scoreAuthor = currentUser.displayName.toString();
+                String reason = reasonTextController.text;
+                firestoreService.addScoreDeductionToFirestore(
+                    scoreDeducted,
+                    newScore,
+                    docID!,
+                    scoreAuthor,
+                    teamName,
+                    currentScore,
+                    reason);
+                textController.clear();
+                Navigator.pop(context);
+              }
+            },
+            child: Text("Deduct"),
+          )
+        ],
+      ),
+    );
   }
 
   @override
