@@ -15,18 +15,50 @@ class TeamScreen extends StatefulWidget {
 
 final FirestoreService firestoreService = FirestoreService();
 final TextEditingController textController = TextEditingController();
+final TextEditingController reasonTextController = TextEditingController();
 
 class _TeamScreenState extends State<TeamScreen> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    textController.text = '';
+    reasonTextController.text = '';
+    super.initState();
+  }
+
   void openDialogAddScore(
       BuildContext context, String? docID, String teamName, int currentScore) {
+    //Initiate the text controller when dialog is opened
+    textController.text = '';
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              content: TextField(
-                keyboardType: TextInputType.number,
-                controller: textController,
+              content: SizedBox(
+                child: SizedBox(
+                  height: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Add score to $teamName",
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20),
+                      Column(children: [
+                        TextField(
+                          decoration:
+                              const InputDecoration(hintText: "Add score here"),
+                          keyboardType: TextInputType.number,
+                          controller: textController,
+                        ),
+                      ]),
+                    ],
+                  ),
+                ),
               ),
               actions: [
                 ElevatedButton(
@@ -54,12 +86,53 @@ class _TeamScreenState extends State<TeamScreen> {
 
   void openDialogDeductScore(
       BuildContext context, String? docID, String teamName, int currentScore) {
+    //Initiate the text controllers when dialog is opened
+    textController.text = '';
+    reasonTextController.text = '';
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              content: TextField(
-                keyboardType: TextInputType.number,
-                controller: textController,
+              content: SizedBox(
+                child: SizedBox(
+                  height: 350,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Deduct score to $teamName",
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: "Subtract score here",
+                        ),
+                        keyboardType: TextInputType.number,
+                        controller: textController,
+                      ),
+                      const SizedBox(height: 20),
+                      const Center(
+                        child: Text(
+                          "Reason",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: "Add statement here",
+                          // Adjust height to center vertically
+                        ),
+                        keyboardType: TextInputType.text,
+                        controller: reasonTextController,
+                        minLines: 7,
+                        maxLines: null,
+                      )
+                    ],
+                  ),
+                ),
               ),
               actions: [
                 ElevatedButton(
@@ -68,7 +141,7 @@ class _TeamScreenState extends State<TeamScreen> {
                           currentScore - int.parse(textController.text);
                       int scoreDeducted = int.parse(textController.text);
                       String scoreAuthor = currentUser.displayName.toString();
-                      String reason = "No reason for now";
+                      String reason = reasonTextController.text;
                       firestoreService.addScoreDeductionToFirestore(
                           scoreDeducted,
                           newScore,
