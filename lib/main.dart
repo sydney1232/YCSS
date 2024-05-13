@@ -82,7 +82,11 @@ class _WelcomePageState extends State<WelcomePage> {
                         padding: const EdgeInsets.all(30.0),
                         child: Column(
                           children: [
-                            Lottie.asset(contents[i].image),
+                            Lottie.asset(
+                              contents[i].image,
+                              height: 250,
+                              width: 250,
+                            ),
                             Header1(text: contents[i].header),
                             SizedBox(height: 20),
                             Header2(text: contents[i].desc),
