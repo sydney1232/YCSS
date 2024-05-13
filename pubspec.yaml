@@ -72,6 +72,8 @@ flutter:
   - assets/leaderboard.png
   - assets/line.png
   - assets/run.png
+  - assets/runfinal.json
+  - assets/friends.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

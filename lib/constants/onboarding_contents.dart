@@ -12,7 +12,7 @@ List<OnboardingContents> contents = [
     header: "RUN 2024",
     desc:
         "Welcome to Calvary Chapel Youth Conference 2024! It is always exciting to work with group of leaders and worship the Lord!",
-    image: "assets/scoreball.json",
+    image: "assets/runfinal.json",
   ),
   OnboardingContents(
     header: "Introducing YCSS",
@@ -24,6 +24,6 @@ List<OnboardingContents> contents = [
     header: "Score with Joy!",
     desc:
         "\"Worship the Lord with gladness; come before him with joyful songs. Know that the Lord is God. It is he who made us, and we are his. We are his people, The sheep of his pasture. \" -Psalm 100:2-3  ",
-    image: "assets/scoreball.json",
+    image: "assets/friends.json",
   ),
 ];
