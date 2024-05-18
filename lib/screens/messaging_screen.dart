@@ -205,17 +205,19 @@ class _MessagingPageState extends State<MessagingPage> {
                   ),
                   child: IconButton(
                     onPressed: () {
-                      sendMessage(
-                          userName, messageBoxTextEditingController.text);
+                      if (messageBoxTextEditingController.text.isNotEmpty) {
+                        sendMessage(
+                            userName, messageBoxTextEditingController.text);
 
-                      //Scroll to the latest message before message is sent
-                      WidgetsBinding.instance!.addPostFrameCallback((_) {
-                        _sc.animateTo(
-                          _sc.position.maxScrollExtent,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      });
+                        //Scroll to the latest message before message is sent
+                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          _sc.animateTo(
+                            _sc.position.maxScrollExtent,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        });
+                      }
                     },
                     icon: Icon(
                       Icons.send,
