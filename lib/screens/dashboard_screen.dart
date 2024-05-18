@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ycss/constants/color_palette.dart';
 import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/screens/capture_the_flag_screen.dart';
+import 'package:ycss/screens/messaging_screen.dart';
 import 'package:ycss/screens/score_log_screen.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
@@ -139,6 +140,16 @@ class _DashboardPageState extends State<DashboardPage> {
                                   builder: (context) => const TeamRanking()));
                         },
                       ),
+                    ItemTile(
+                        name: "Messaging",
+                        backgroundcolor: Colors.green,
+                        icon: Icons.message,
+                        onPress: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MessagingPage()));
+                        })
                   ],
                 ),
               ]),

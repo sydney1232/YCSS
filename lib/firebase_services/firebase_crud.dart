@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'firebase_utils.dart';
@@ -8,6 +10,9 @@ class FirestoreService {
 
   final CollectionReference scorelogs =
       FirebaseFirestore.instance.collection('scorelogs');
+
+  final CollectionReference messaging =
+      FirebaseFirestore.instance.collection('messaging');
 
   Stream<QuerySnapshot> getTeamsStreamByID() {
     //final teamStream = teams.orderBy('score', descending: true).snapshots();
@@ -74,5 +79,19 @@ class FirestoreService {
     String phTime = getLocalDateAndTime();
     addScoreLogging(
         "$teamName's flag has been captured. ${scoreDeduct}pts deducted by $scoreAuthor on $phTime");
+  }
+
+  Future<void> addMessaging(String sender, String body) {
+    return messaging.add({
+      'sender': sender,
+      'body': body,
+      'timestamp': Timestamp.now(),
+    });
+  }
+
+  Stream<QuerySnapshot> getMessagesByTimestamp() {
+    final getSMSByTimeStamp =
+        messaging.orderBy('timestamp', descending: false).snapshots();
+    return getSMSByTimeStamp;
   }
 }
