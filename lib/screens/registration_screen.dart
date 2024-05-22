@@ -169,7 +169,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       REGISTER,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontFamily: 'MaidenCrimes'),
                     ),
                   ),
