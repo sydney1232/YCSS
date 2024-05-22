@@ -17,6 +17,7 @@ class _Header2State extends State<Header2> {
         widget.text,
         textAlign: TextAlign.center,
         style: TextStyle(
+          fontFamily: 'DIN',
           fontSize: 18,
           color: lightPink,
         ),

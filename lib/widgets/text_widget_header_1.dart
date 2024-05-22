@@ -16,6 +16,7 @@ class _Header1State extends State<Header1> {
       widget.text,
       textAlign: TextAlign.left,
       style: TextStyle(
+        fontFamily: "TheRift",
         fontWeight: FontWeight.bold,
         fontSize: 32,
         color: lightPink,
