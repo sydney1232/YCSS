@@ -92,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                         Text(
                           SIGN_IN,
                           style: TextStyle(
+                              fontFamily: 'TheRift',
                               fontSize: 28,
                               color: lightPink,
                               fontWeight: FontWeight.bold),
@@ -124,7 +125,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextButton(
                     child: Text(
                       LOGIN,
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'MaidenCrimes'),
                     ),
                     onPressed: () => signUserIn(userTextEditingController.text,
                         passwordTextEditingController.text),
