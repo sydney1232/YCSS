@@ -6,7 +6,7 @@ Container buildDot(int index, int currentIndex, BuildContext context) {
     height: 10,
     width: currentIndex == index ? 25 : 10,
     margin: EdgeInsets.only(right: 5),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20), color: lightPink),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(20), color: purple),
   );
 }
