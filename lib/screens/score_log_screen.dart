@@ -15,7 +15,7 @@ class _ScoreLogsScreenState extends State<ScoreLogsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: yellowOrange2,
+        backgroundColor: purple,
         appBar: AppBar(
           iconTheme: IconThemeData(color: lightPink),
           backgroundColor: blue,
@@ -54,9 +54,12 @@ class _ScoreLogsScreenState extends State<ScoreLogsScreen> {
                                 children: [
                                   Center(
                                     child: Container(
-                                      color: white,
+                                      color: lightPink,
                                       padding: EdgeInsets.all(18),
-                                      child: Text(scoreDesc),
+                                      child: Text(
+                                        scoreDesc,
+                                        style: TextStyle(color: white),
+                                      ),
                                     ),
                                   )
                                 ],

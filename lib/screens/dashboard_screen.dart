@@ -38,7 +38,7 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.blue.shade900,
+              color: lightPink,
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(50),
               ),
@@ -53,14 +53,14 @@ class _DashboardPageState extends State<DashboardPage> {
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
-                        ?.copyWith(color: lightPink),
+                        ?.copyWith(color: white),
                   ),
                   subtitle: Text(
                     "Welcome back",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: yellowOrange2),
+                        ?.copyWith(color: yellowOrange),
                   ),
                   trailing: IconButton(
                     onPressed: userSignOut,
@@ -76,7 +76,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           Container(
-            color: Colors.blue.shade900,
+            color: lightPink,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30),
               decoration: const BoxDecoration(
