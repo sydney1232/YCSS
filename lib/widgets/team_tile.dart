@@ -46,7 +46,7 @@ class TeamTile extends StatelessWidget {
                   ),
                   Text(
                     teamName,
-                    style: TextStyle(fontSize: 15.0),
+                    style: TextStyle(fontSize: 15.0, fontFamily: "DIN"),
                   ),
                 ],
               ),

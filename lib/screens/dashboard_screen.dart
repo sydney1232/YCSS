@@ -38,7 +38,7 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: lightPink,
+              color: blue,
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(50),
               ),
@@ -50,17 +50,15 @@ class _DashboardPageState extends State<DashboardPage> {
                   contentPadding: EdgeInsets.symmetric(horizontal: 30),
                   title: Text(
                     "Hi, $userName!",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: white),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: lightPink, fontFamily: 'MaidenCrimes'),
                   ),
                   subtitle: Text(
                     "Welcome back",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: yellowOrange),
+                        ?.copyWith(color: yellowOrange, fontFamily: 'TheRift'),
                   ),
                   trailing: IconButton(
                     onPressed: userSignOut,
@@ -76,7 +74,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           Container(
-            color: lightPink,
+            color: blue,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30),
               decoration: const BoxDecoration(
@@ -97,7 +95,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   children: [
                     ItemTile(
                       name: "Update Score",
-                      backgroundcolor: Colors.grey,
+                      backgroundcolor: blue,
                       icon: Icons.scoreboard,
                       onPress: () {
                         Navigator.push(
@@ -108,7 +106,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     ItemTile(
                       name: "Capture the Flag",
-                      backgroundcolor: Colors.orange,
+                      backgroundcolor: lightPink,
                       icon: Icons.flag,
                       onPress: () {
                         Navigator.push(
@@ -119,7 +117,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     ItemTile(
                       name: "Score Logs",
-                      backgroundcolor: Colors.yellow,
+                      backgroundcolor: purple,
                       icon: Icons.history,
                       onPress: () {
                         Navigator.push(
@@ -131,7 +129,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     if (isAdmin())
                       ItemTile(
                         name: "Ranking",
-                        backgroundcolor: Colors.red,
+                        backgroundcolor: yellowOrange,
                         icon: Icons.bar_chart,
                         onPress: () {
                           Navigator.push(
@@ -142,8 +140,9 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                     ItemTile(
                         name: "Messaging",
-                        backgroundcolor: Colors.green,
+                        backgroundcolor: blue,
                         icon: Icons.message,
+                        iconColor: lightPink,
                         onPress: () {
                           Navigator.push(
                               context,

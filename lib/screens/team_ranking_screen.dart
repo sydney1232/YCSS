@@ -102,7 +102,8 @@ class _TeamRankingState extends State<TeamRanking> {
                                   teamText,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                      fontSize: 18,
+                                      fontFamily: 'DIN'),
                                 ),
                               ],
                             ),

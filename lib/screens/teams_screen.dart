@@ -201,12 +201,17 @@ class _TeamScreenState extends State<TeamScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: blue,
       body: Column(children: [
         Padding(
             padding: EdgeInsets.only(top: 80),
             child: Text(
               SELECT_TEAM_UPDATE_SCORE,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: lightPink,
+                  fontFamily: 'TheRift'),
             )),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
@@ -298,7 +303,7 @@ class _TeamScreenState extends State<TeamScreen> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
-          backgroundColor: blue,
+          backgroundColor: lightPink,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
           onPressed: () {
@@ -307,7 +312,7 @@ class _TeamScreenState extends State<TeamScreen> {
           child: Icon(
             size: 40,
             Icons.home,
-            color: lightPink,
+            color: blue,
           ),
         ),
       ),

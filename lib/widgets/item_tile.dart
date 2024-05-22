@@ -1,17 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ItemTile extends StatefulWidget {
   String name;
   Color backgroundcolor;
   IconData icon;
+  Color? iconColor;
   final VoidCallback onPress;
   ItemTile(
       {super.key,
       required this.name,
       required this.backgroundcolor,
       required this.icon,
+      this.iconColor,
       required this.onPress});
 
   @override
@@ -46,14 +46,17 @@ class _ItemTileState extends State<ItemTile> {
               ),
               child: Icon(
                 widget.icon,
-                color: Colors.white,
+                color: widget.iconColor ?? Colors.white,
                 size: 45,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               widget.name,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontFamily: 'DIN'),
             )
           ],
         ),

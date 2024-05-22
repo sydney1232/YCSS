@@ -57,13 +57,18 @@ class _CaptureFlagPageState extends State<CaptureFlagPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: lightPink,
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.only(top: 80),
             child: Text(
               CAPTURE_THE_FLAG,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: white,
+                  fontFamily: 'TheRift'),
             ),
           ),
           Expanded(

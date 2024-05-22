@@ -24,7 +24,10 @@ class _FlagCaptureTileState extends State<FlagCaptureTile> {
               padding: EdgeInsets.all(16),
               child: Text(
                 widget.teamName,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontFamily: 'DIN'),
               ),
             ),
           ]),
