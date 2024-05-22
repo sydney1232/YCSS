@@ -24,6 +24,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             borderRadius: BorderRadius.circular(20.0), // Add rounded corners
           ),
           child: TextFormField(
+            style: TextStyle(color: lightPink, fontFamily: 'DIN'),
             controller: widget.controller,
             obscureText: true,
             keyboardType: TextInputType.emailAddress,
@@ -34,7 +35,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                 padding: EdgeInsets.only(left: 16, right: 8),
                 child: Icon(
                   Icons.lock,
-                  color: Color(0xFF0D47A1),
+                  color: blue,
                 ),
               ),
               contentPadding:

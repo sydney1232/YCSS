@@ -25,17 +25,17 @@ class _UserNameTextFieldState extends State<UserNameTextField> {
             borderRadius: BorderRadius.circular(20.0), // Add rounded corners
           ),
           child: TextFormField(
-            style: TextStyle(color: lightPink),
+            style: TextStyle(color: lightPink, fontFamily: 'DIN'),
             controller: widget.controller,
             keyboardType: TextInputType.emailAddress,
             cursorColor: lightPink,
             decoration: InputDecoration(
               hintText: widget.hintText,
               prefixIcon: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 8),
+                padding: const EdgeInsets.only(left: 16, right: 8, top: 3),
                 child: Icon(
                   widget.hintText == EMAIL ? Icons.mail : Icons.person,
-                  color: Color(0xFF0D47A1),
+                  color: blue,
                 ), //Using this color code since it is expecting a PrimarySwatch value
               ),
               contentPadding:
