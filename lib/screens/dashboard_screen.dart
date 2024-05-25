@@ -29,7 +29,9 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     String userName = currentUser.displayName ?? 'User';
     bool isAdmin() {
-      return currentUser.email == ADMIN;
+      return adminList
+          .where((admin) => admin.toString() == currentUser.email)
+          .isNotEmpty;
     }
 
     return Scaffold(
