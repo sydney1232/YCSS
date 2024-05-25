@@ -9,4 +9,8 @@ const String USERNAME = "Username";
 const String SELECT_TEAM_UPDATE_SCORE = "Select Team to Score Update";
 const String CAPTURE_THE_FLAG = "Capture the flag";
 
-const String ADMIN = "gmadmin@gmail.com";
+const List<String> adminList = [
+  "gracecadimas@gmail.com",
+  "petercadimas@gmail.com",
+  "hanakhaleel@gmail.com"
+];
