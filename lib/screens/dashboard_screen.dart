@@ -5,6 +5,7 @@ import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/screens/capture_the_flag_screen.dart';
 import 'package:ycss/screens/messaging_screen.dart';
 import 'package:ycss/screens/score_log_screen.dart';
+import 'package:ycss/screens/team_headtohead_screen.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
@@ -150,6 +151,17 @@ class _DashboardPageState extends State<DashboardPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const MessagingPage()));
+                        }),
+                    ItemTile(
+                        name: "Head to Head",
+                        backgroundcolor: lightPink,
+                        icon: Icons.connect_without_contact,
+                        onPress: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const HeadToHeadPage()));
                         })
                   ],
                 ),
