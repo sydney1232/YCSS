@@ -1,11 +1,14 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ycss/constants/string_constants.dart';
+import 'package:ycss/firebase_services/firebase_crud.dart';
+import 'package:ycss/firebase_services/firebase_utils.dart';
 import 'package:ycss/widgets/team_tile_select_vs.dart';
 import 'package:ycss/widgets/team_tile_vs.dart';
 
 import '../constants/color_palette.dart';
-import 'capture_the_flag_screen.dart';
 
 class HeadToHeadPage extends StatefulWidget {
   const HeadToHeadPage({Key? key}) : super(key: key);
@@ -15,28 +18,107 @@ class HeadToHeadPage extends StatefulWidget {
 }
 
 class _HeadToHeadPageState extends State<HeadToHeadPage> {
+  final FirestoreService firestoreService = FirestoreService();
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
   //First Team Pick
   String tempImage = "";
   String tempTeamName = "";
   String tempDocID = "";
+  int currentScoreTeam1 = 0;
 
   //Second Team Pick
   String tempImage2 = "";
   String tempTeamName2 = "";
   String tempDocID2 = "";
+  int currentScoreTeam2 = 0;
 
   @override
   Widget build(BuildContext context) {
+    String userName = currentUser.displayName ?? 'User';
     void clearTeams() {
       //First Team Pick
       tempImage = "";
       tempTeamName = "";
       tempDocID = "";
+      currentScoreTeam1 = 0;
 
       //Second Team Pick
       tempImage2 = "";
       tempTeamName2 = "";
       tempDocID2 = "";
+      currentScoreTeam2 = 0;
+    }
+
+    void notifyUpdateSuccessful(String winningTeam) {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.topSlide,
+        title: "Update Successful!",
+        desc:
+            "Score Updated! Congratulations to $winningTeam for winning the game!",
+        btnOkText: "Okay",
+        btnOkColor: Colors.green,
+        btnOkOnPress: () {
+          setState(() {
+            clearTeams();
+          });
+        },
+      ).show();
+    }
+
+    void processScoreUpdate(
+        String winningTeamName,
+        String wDocId,
+        int winningTeamCurrentScore,
+        String losingTeamName,
+        String lDocId,
+        int losingTeamCurrentScore) {
+      int addedScore = 10;
+      int deductedScore = 10;
+      String phTime = getLocalDateAndTime();
+
+      //Update Score Winning Team
+      firestoreService.updateScore(
+          wDocId, winningTeamCurrentScore + addedScore);
+
+      //Update Score Losing Team
+      firestoreService.updateScore(
+          lDocId, losingTeamCurrentScore - deductedScore);
+
+      //Update Score Logging
+      firestoreService.addScoreLogging(
+          "Team Head to Head: $tempTeamName - $tempTeamName2 \n\n W: $winningTeamName \n L: $losingTeamName \n\n New Score: \n $winningTeamName, from $winningTeamCurrentScore to ${winningTeamCurrentScore + addedScore} \n $losingTeamName, from $losingTeamCurrentScore to ${losingTeamCurrentScore - deductedScore} \n\n Author: $userName \n Date and Time: $phTime");
+
+      //Notify Successful Update
+      notifyUpdateSuccessful(winningTeamName);
+    }
+
+    void confirmWinningTeam(
+        String winningTeamName,
+        String wDocId,
+        int winningTeamCurrentScore,
+        String losingTeamName,
+        String lDocId,
+        int losingTeamCurrentScore) {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.question,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: "$winningTeamName Won?",
+        desc:
+            "Please confirm to declare $winningTeamName as the winner of this match. A deduction of 10 pts will be done to $losingTeamName",
+        btnOkOnPress: () {
+          processScoreUpdate(winningTeamName, wDocId, winningTeamCurrentScore,
+              losingTeamName, lDocId, losingTeamCurrentScore);
+        },
+        btnCancelOnPress: () {},
+        btnCancelColor: Colors.red,
+        btnOkColor: Colors.green,
+        btnOkText: "Confirm",
+      ).show();
     }
 
     return Scaffold(
@@ -68,13 +150,19 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
                       Container(
                         margin: EdgeInsets.only(right: 10),
                         child: TeamTileVs(
-                          onDoubleTap: () {
-                            print("VALUE OF: $tempImage");
-                          },
                           imageURL: tempImage,
                           teamName: tempTeamName.toString() == ""
                               ? "Select Team"
                               : tempTeamName,
+                          onDoubleTap: () {
+                            confirmWinningTeam(
+                                tempTeamName,
+                                tempDocID,
+                                currentScoreTeam1,
+                                tempTeamName2,
+                                tempDocID2,
+                                currentScoreTeam2);
+                          },
                         ),
                       ),
                       Container(
@@ -93,7 +181,15 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
                               : tempTeamName2,
                           imageURL:
                               tempImage2.toString() == "" ? "" : tempImage2,
-                          onDoubleTap: () {},
+                          onDoubleTap: () {
+                            confirmWinningTeam(
+                                tempTeamName2,
+                                tempDocID2,
+                                currentScoreTeam2,
+                                tempTeamName,
+                                tempDocID,
+                                currentScoreTeam1);
+                          },
                         ),
                       ),
                     ],
@@ -155,10 +251,12 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
                                   tempImage = imageURL;
                                   tempTeamName = teamText;
                                   tempDocID = docID;
+                                  currentScoreTeam1 = currentScore;
                                 } else {
                                   tempImage2 = imageURL;
                                   tempTeamName2 = teamText;
                                   tempDocID2 = docID;
+                                  currentScoreTeam2 = currentScore;
                                 }
 
                                 //If user selects the same team
