@@ -119,14 +119,14 @@ class _DashboardPageState extends State<DashboardPage> {
                       },
                     ),
                     ItemTile(
-                      name: "Score Logs",
-                      backgroundcolor: purple,
-                      icon: Icons.history,
+                      name: "Head to Head",
+                      backgroundcolor: lightPink,
+                      icon: Icons.connect_without_contact,
                       onPress: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ScoreLogsScreen()));
+                                builder: (context) => const HeadToHeadPage()));
                       },
                     ),
                     if (isAdmin())
@@ -142,6 +142,17 @@ class _DashboardPageState extends State<DashboardPage> {
                         },
                       ),
                     ItemTile(
+                      name: "Score Logs",
+                      backgroundcolor: purple,
+                      icon: Icons.history,
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ScoreLogsScreen()));
+                      },
+                    ),
+                    ItemTile(
                         name: "Messaging",
                         backgroundcolor: blue,
                         icon: Icons.message,
@@ -152,17 +163,6 @@ class _DashboardPageState extends State<DashboardPage> {
                               MaterialPageRoute(
                                   builder: (context) => const MessagingPage()));
                         }),
-                    ItemTile(
-                        name: "Head to Head",
-                        backgroundcolor: lightPink,
-                        icon: Icons.connect_without_contact,
-                        onPress: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const HeadToHeadPage()));
-                        })
                   ],
                 ),
               ]),
