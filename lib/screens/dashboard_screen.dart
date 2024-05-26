@@ -141,17 +141,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                   builder: (context) => const TeamRanking()));
                         },
                       ),
-                    ItemTile(
-                      name: "Score Logs",
-                      backgroundcolor: purple,
-                      icon: Icons.history,
-                      onPress: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ScoreLogsScreen()));
-                      },
-                    ),
+                    if (isAdmin())
+                      ItemTile(
+                        name: "Score Logs",
+                        backgroundcolor: purple,
+                        icon: Icons.history,
+                        onPress: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ScoreLogsScreen()));
+                        },
+                      ),
                     ItemTile(
                         name: "Messaging",
                         backgroundcolor: blue,
