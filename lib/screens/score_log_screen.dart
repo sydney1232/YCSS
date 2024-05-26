@@ -49,22 +49,25 @@ class _ScoreLogsScreenState extends State<ScoreLogsScreen> {
                                 document.data() as Map<String, dynamic>;
                             String scoreDesc = data['logDesc'];
 
-                            return Table(border: TableBorder.all(), children: [
-                              TableRow(
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      color: lightPink,
-                                      padding: EdgeInsets.all(18),
-                                      child: Text(
-                                        scoreDesc,
-                                        style: TextStyle(color: white),
+                            return Container(
+                              color: lightPink,
+                              child:
+                                  Table(border: TableBorder.all(), children: [
+                                TableRow(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: Center(
+                                        child: Text(
+                                          scoreDesc,
+                                          style: TextStyle(color: white),
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ]);
+                                    )
+                                  ],
+                                )
+                              ]),
+                            );
                             // return Container(
                             //   decoration: BoxDecoration(
                             //     border: Border.all(width: 2.0),
