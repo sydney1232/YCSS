@@ -8,6 +8,8 @@ const String USERNAME = "Username";
 
 const String SELECT_TEAM_UPDATE_SCORE = "Select Team to Score Update";
 const String CAPTURE_THE_FLAG = "Capture the flag";
+const String HEAD_TO_HEAD = "Team Head to Head";
+const String DOUBLE_TAP_TO_DECLARE = "Double Tap to declare the Team Winner";
 
 const List<String> adminList = [
   "gracecadimas@gmail.com",
