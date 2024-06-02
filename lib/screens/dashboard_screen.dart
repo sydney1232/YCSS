@@ -7,6 +7,7 @@ import 'package:ycss/screens/messaging_screen.dart';
 import 'package:ycss/screens/score_log_screen.dart';
 import 'package:ycss/screens/team_headtohead_screen.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
+import 'package:ycss/screens/team_time_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/item_tile.dart';
 
@@ -127,6 +128,17 @@ class _DashboardPageState extends State<DashboardPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const HeadToHeadPage()));
+                      },
+                    ),
+                    ItemTile(
+                      name: "Time Attack",
+                      backgroundcolor: yellowOrange2,
+                      icon: Icons.access_time,
+                      onPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TeamTime()));
                       },
                     ),
                     if (isAdmin())
