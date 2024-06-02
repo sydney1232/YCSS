@@ -83,7 +83,8 @@ class _MessagingPageState extends State<MessagingPage> {
         backgroundColor: blue,
         title: Text(
           "Logged in as $userName",
-          style: TextStyle(color: lightPink, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: lightPink, fontWeight: FontWeight.bold, fontFamily: "DIN"),
         ),
       ),
       body: Column(

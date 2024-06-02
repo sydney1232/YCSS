@@ -44,7 +44,9 @@ class _TeamRankingState extends State<TeamRanking> {
                           Text(
                             "Leaderboards",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 28),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28,
+                                fontFamily: "TheRift"),
                           ),
                           SizedBox(height: 10),
                           Padding(
@@ -53,7 +55,9 @@ class _TeamRankingState extends State<TeamRanking> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 "Ends in 7 days",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "DIN"),
                               ),
                             ),
                           ),

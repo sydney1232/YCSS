@@ -22,7 +22,10 @@ class _ScoreLogsScreenState extends State<ScoreLogsScreen> {
           centerTitle: true,
           title: Text(
             "Score Logs",
-            style: TextStyle(color: lightPink, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: lightPink,
+                fontWeight: FontWeight.bold,
+                fontFamily: "TheRift"),
           ),
           toolbarHeight: 100,
         ),
