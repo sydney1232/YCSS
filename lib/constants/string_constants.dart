@@ -12,7 +12,9 @@ const String HEAD_TO_HEAD = "Team Head to Head";
 const String DOUBLE_TAP_TO_DECLARE = "Double Tap to declare the Team Winner";
 const String TEAM_TIME_ATTACK = "Team Time Attack";
 const String TAP_TEAM_GET_TIME = "Tap A team to register time";
-
+const String TEAM_TIME_ATTACK_RESULTS = "Time Attack Results";
+const String TEAM_TIME_ATTACK_RESULTS_ORDER = "Team is Sorted by Time";
+const String SUBMIT = "Submit";
 const List<String> adminList = [
   "gracecadimas@gmail.com",
   "petercadimas@gmail.com",
