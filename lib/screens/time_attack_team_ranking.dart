@@ -17,6 +17,22 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
     // Sort the list by the seconds property
     globalTeamInfoList.sort((a, b) => a.timeInMillis.compareTo(b.timeInMillis));
 
+    int getScore(int index) {
+      final scoreMap = {
+        1: 100,
+        2: 90,
+        3: 80,
+        4: 70,
+        5: 60,
+        6: 50,
+        7: 40,
+        8: 30,
+        9: 20,
+        10: 100,
+      };
+      return scoreMap[index] ?? 0;
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -64,7 +80,9 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
                     return DataRow(cells: [
                       DataCell(Text(teamInfo.teamName)),
                       DataCell(Text(teamInfo.time)),
-                      DataCell(Text('${index + 1}')),
+                      DataCell(
+                        Text('${index + 1} - ${getScore(index + 1)} pts'),
+                      ),
                     ]);
                   },
                 ),
