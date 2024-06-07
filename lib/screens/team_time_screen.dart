@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ycss/constants/globals.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/models/team_time_info.dart';
+import 'package:ycss/screens/time_attack_team_ranking.dart';
 
 import '../constants/color_palette.dart';
 import '../firebase_services/firebase_crud.dart';
@@ -32,7 +33,10 @@ void addTeamTimeToPreview(
     String docID, String teamName, String time, int timeInMillis) {
   globalTeamInfoList.add(
     TeamTimeInfo(
-        docID: docID, teamName: teamName, time: time, timeInMillis: 999),
+        docID: docID,
+        teamName: teamName,
+        time: time,
+        timeInMillis: timeInMillis),
   );
 }
 
@@ -155,12 +159,26 @@ class _TeamTimeState extends State<TeamTime> {
                     TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          //Convert all time data to Integer
+                          String minutesString = minutesTextController.text;
+                          String secondsString = secondsTextController.text;
+                          String millisecondsString =
+                              millisecondsTextController.text;
+
+                          int minutes = int.parse(minutesString);
+                          int seconds = int.parse(secondsString);
+                          int milliseconds = int.parse(millisecondsString);
+
+                          var timeInMillis = convertTimeInMillis(
+                              minutes, seconds, milliseconds);
+
                           //Add Team Score to Preview
                           addTeamTimeToPreview(
                             docID,
                             teamName,
-                            "${minutesTextController.text}:${secondsTextController.text}:${millisecondsTextController.text}",
-                            999,
+                            //We put 00: For formatting in Hours, take note that hours is not implemented at this time
+                            "00:${formatTime(minutes)}:${formatTime(seconds)}.${millisecondsTextController.text}",
+                            timeInMillis,
                           );
 
                           //Clear Text Fields
@@ -183,6 +201,23 @@ class _TeamTimeState extends State<TeamTime> {
         ),
       ),
     );
+  }
+
+  int convertTimeInMillis(int minutes, int seconds, int milliseconds) {
+    var minutesInMillis = 0;
+    var secondsInMillis = 0;
+
+    // For Minutes, multiply the time value by 60000 to get milliseconds
+    minutesInMillis = minutes * 60000;
+
+    // For Seconds, multiply the value by 1000 to get milliseconds
+    secondsInMillis = seconds * 1000;
+
+    return minutesInMillis + secondsInMillis + milliseconds;
+  }
+
+  String formatTime(int time) {
+    return time < 10 ? '0$time' : '$time';
   }
 
   @override
@@ -269,7 +304,20 @@ class _TeamTimeState extends State<TeamTime> {
                         child: Text("No Teams"),
                       );
                     }
-                  }))
+                  })),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const TimeAttackTeamRanking()));
+            },
+            child: Text(
+              "Preview Team Ranking",
+              style: TextStyle(
+                  fontFamily: "TheRift", decoration: TextDecoration.underline),
+            ),
+          ),
         ],
       ),
     );
