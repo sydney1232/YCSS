@@ -94,4 +94,23 @@ class FirestoreService {
         messaging.orderBy('timestamp', descending: false).snapshots();
     return getSMSByTimeStamp;
   }
+
+  Future<int?> getCurrentScoreByDocumentID(String documentID) async {
+    // Simulate an asynchronous operation
+    await Future.delayed(const Duration(seconds: 1));
+    try {
+      DocumentSnapshot docSnapshot = await teams.doc(documentID).get();
+      if (docSnapshot.exists) {
+        var fieldValue = docSnapshot.get('score');
+
+        return fieldValue;
+      } else {
+        print("Document does not exist");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching document: $e");
+      return null;
+    }
+  }
 }
