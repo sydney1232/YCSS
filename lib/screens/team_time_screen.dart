@@ -249,6 +249,64 @@ class _TeamTimeState extends State<TeamTime> {
                   ),
                 ],
               )),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                        content: SizedBox(
+                      height: 150,
+                      width: 200,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Are you sure you want to Reset?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16, fontFamily: "DIN"),
+                            ),
+                            const SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    child: Text(
+                                      CANCEL,
+                                      style: TextStyle(fontFamily: "DIN"),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        globalTeamInfoList.clear();
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: Text(
+                                      OK,
+                                      style: TextStyle(fontFamily: "DIN"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
+                  );
+                });
+              },
+              icon: Icon(Icons.autorenew_rounded)),
           Expanded(
               child: StreamBuilder<QuerySnapshot>(
                   stream: firestoreService.getTeamsStreamByID(),
