@@ -11,6 +11,7 @@ import 'package:ycss/screens/dashboard_screen.dart';
 import 'package:ycss/screens/login_screen.dart';
 import 'package:ycss/screens/registration_screen.dart';
 import 'package:ycss/screens/team_ranking_screen.dart';
+import 'package:ycss/screens/team_time_screen.dart';
 import 'package:ycss/screens/teams_screen.dart';
 import 'package:ycss/widgets/build_dot.dart';
 import 'package:ycss/widgets/text_widget_header_1.dart';
@@ -33,6 +34,7 @@ void main() async {
       kRegistrationPage: (context) => RegistrationPage(),
       kTeamScreen: (context) => TeamScreen(),
       kTeamRanking: (context) => TeamRanking(),
+      kTeamTimeAttackBoards: (context) => TeamTime(),
     },
   ));
 }

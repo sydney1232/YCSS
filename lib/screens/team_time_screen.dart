@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ycss/constants/globals.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/models/team_time_info.dart';
-import 'package:ycss/screens/dashboard_screen.dart';
 import 'package:ycss/screens/time_attack_team_ranking.dart';
 
 import '../constants/color_palette.dart';
@@ -388,10 +387,7 @@ class _TeamTimeState extends State<TeamTime> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DashboardPage()));
+                    Navigator.pop(context);
                   },
                   child: Text(
                     "Back",
