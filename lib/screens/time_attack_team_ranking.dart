@@ -14,7 +14,11 @@ class TimeAttackTeamRanking extends StatefulWidget {
 }
 
 class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
+  //Firebase instance
   FirestoreService firestoreService = FirestoreService();
+
+  // Circular loading progress indicator when updating scores
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,12 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
     globalTeamInfoList.sort((a, b) => a.timeInMillis.compareTo(b.timeInMillis));
 
     var teamIndex = 0;
+
+    // Function to check if the lengths match
+    Future<bool> areLengthsEqual() async {
+      int firestoreCount = await firestoreService.getTeamCollectionCount();
+      return globalTeamInfoList.length == firestoreCount;
+    }
 
     int getScore(int index) {
       final scoreMap = {
@@ -47,118 +57,195 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
       });
     }
 
+    _updateScores() async {
+      setState(() {
+        _isLoading = true;
+      });
+
+      for (var info in globalTeamInfoSubmissionList) {
+        var currentScore =
+            await firestoreService.getCurrentScoreByDocumentID(info.docID);
+        print(
+            "Team: ${info.teamName} DocID: ${info.docID} Receiving Points: ${info.receivingPoints} \n ${info.teamName}'s Current Score: $currentScore $teamIndex");
+        firestoreService.updateScore(
+            info.docID, currentScore! + info.receivingPoints!);
+
+        setState(() {
+          globalTeamInfoList.removeWhere((item) => item.docID == info.docID);
+        });
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Center(
-              child: Padding(
-                  padding: EdgeInsets.only(top: 80),
-                  child: Column(
-                    children: [
-                      Text(
-                        TEAM_TIME_ATTACK_RESULTS,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 21,
-                            color: lightPink,
-                            fontFamily: 'TheRift'),
-                      ),
-                      SizedBox(height: 40),
-                      Text(
-                        TEAM_TIME_ATTACK_RESULTS_ORDER,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: lightPink,
-                            fontFamily: 'DIN'),
-                      ),
-                    ],
-                  )),
-            ),
-            const SizedBox(
-              height: 35,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: DataTable(
-                columns: [
-                  DataColumn(label: Text('Team Name')),
-                  DataColumn(label: Text('Time')),
-                  DataColumn(label: Text('Ranking')),
-                ],
-                rows: List<DataRow>.generate(
-                  globalTeamInfoList.length,
-                  (index) {
-                    var teamInfo = globalTeamInfoList[index];
-
-                    //Display the Team Ranking
-                    return DataRow(cells: [
-                      DataCell(Text(teamInfo.teamName)),
-                      DataCell(Text(teamInfo.time)),
-                      DataCell(
-                        Text('${index + 1} - ${getScore(index + 1)} pts'),
-                      ),
-                    ]);
-                  },
-                ),
+      body: Stack(children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              const Center(
+                child: Padding(
+                    padding: EdgeInsets.only(top: 80),
+                    child: Column(
+                      children: [
+                        Text(
+                          TEAM_TIME_ATTACK_RESULTS,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21,
+                              color: lightPink,
+                              fontFamily: 'TheRift'),
+                        ),
+                        SizedBox(height: 40),
+                        Text(
+                          TEAM_TIME_ATTACK_RESULTS_ORDER,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: lightPink,
+                              fontFamily: 'DIN'),
+                        ),
+                      ],
+                    )),
               ),
-            ),
-            Container(
-              height: 50,
-              margin: EdgeInsets.all(40),
-              width: 100,
-              child: TextButton(
-                onPressed: () {
-                  setState(() async {
-                    for (int i = 0; i < globalTeamInfoList.length; i++) {
-                      var info = globalTeamInfoList[i];
+              const SizedBox(
+                height: 35,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text('Team Name')),
+                    DataColumn(label: Text('Time')),
+                    DataColumn(label: Text('Ranking')),
+                  ],
+                  rows: List<DataRow>.generate(
+                    globalTeamInfoList.length,
+                    (index) {
+                      var teamInfo = globalTeamInfoList[index];
 
-                      // Check if globalTeamInfoSubmissionList already contains the same docID
-                      bool alreadyExists = globalTeamInfoSubmissionList
-                          .any((submission) => submission.docID == info.docID);
-
-                      //Add if doc ID Does not exist
-                      if (!alreadyExists) {
-                        globalTeamInfoSubmissionList.add(TeamTimeInfoSubmission(
-                            docID: info.docID,
-                            teamName: info.teamName,
-                            time: info.time,
-                            timeInMillis: info.timeInMillis,
-                            receivingPoints: getScore(teamIndex + 1)));
-                      }
-                      teamIndex++; //Since we cannot use int i as team count indicator because it affects the count if condition is false, we use this variable to shield the team count value
-                    }
-
-                    for (var info in globalTeamInfoSubmissionList) {
-                      var currentScore = await firestoreService
-                          .getCurrentScoreByDocumentID(info.docID);
-                      print(
-                          "Team: ${info.teamName} DocID: ${info.docID} Receiving Points: ${info.receivingPoints} \n ${info.teamName}'s Current Score: $currentScore $teamIndex");
-                      firestoreService.updateScore(
-                          info.docID, currentScore! + info.receivingPoints!);
-                    }
-                    clearList();
-                  });
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(lightPink),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(color: Colors.red),
-                    ),
+                      //Display the Team Ranking
+                      return DataRow(cells: [
+                        DataCell(Text(teamInfo.teamName)),
+                        DataCell(Text(teamInfo.time)),
+                        DataCell(
+                          Text('${index + 1} - ${getScore(index + 1)} pts'),
+                        ),
+                      ]);
+                    },
                   ),
                 ),
-                child: Text(
-                  SUBMIT,
-                  style: TextStyle(color: white, fontWeight: FontWeight.bold),
-                ),
               ),
-            )
-          ],
+
+              //Check Team Count in Firebase if it is equal to the current List
+              if (!_isLoading)
+                FutureBuilder<bool>(
+                  future: areLengthsEqual(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // While the future is still processing, return a loading indicator
+                      return CircularProgressIndicator();
+                    } else {
+                      // Once the future completes, check its result
+                      if (snapshot.hasData && snapshot.data == true) {
+                        // If the lengths are equal, show the submit button
+                        return Visibility(
+                          visible: true,
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.all(40),
+                            width: 100,
+                            child: TextButton(
+                              onPressed: () {
+                                setState(() async {
+                                  for (int i = 0;
+                                      i < globalTeamInfoList.length;
+                                      i++) {
+                                    var info = globalTeamInfoList[i];
+
+                                    // Check if globalTeamInfoSubmissionList already contains the same docID
+                                    bool alreadyExists =
+                                        globalTeamInfoSubmissionList.any(
+                                            (submission) =>
+                                                submission.docID == info.docID);
+
+                                    //Add if doc ID Does not exist
+                                    if (!alreadyExists) {
+                                      globalTeamInfoSubmissionList.add(
+                                          TeamTimeInfoSubmission(
+                                              docID: info.docID,
+                                              teamName: info.teamName,
+                                              time: info.time,
+                                              timeInMillis: info.timeInMillis,
+                                              receivingPoints:
+                                                  getScore(teamIndex + 1)));
+                                    }
+                                    teamIndex++; //Since we cannot use int i as team count indicator because it affects the count if condition is false, we use this variable to shield the team count value
+                                  }
+                                  await _updateScores();
+                                  clearList();
+                                });
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(lightPink),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: BorderSide(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                SUBMIT,
+                                style: TextStyle(
+                                    color: white, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        // If the lengths are not equal, hide the submit button
+                        return Visibility(
+                          visible: false,
+                          child:
+                              Container(), // You can return an empty container or null here
+                        );
+                      }
+                    }
+                  },
+                ),
+            ],
+          ),
         ),
-      ),
+
+        //When Score is being Updated UI
+        if (_isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(lightPink)),
+                  SizedBox(height: 16),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Updating Scores... Please refrain \n from exiting app or tapping other burrons.",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+      ]),
     );
   }
 }

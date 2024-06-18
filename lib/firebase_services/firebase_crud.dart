@@ -113,4 +113,12 @@ class FirestoreService {
       return null;
     }
   }
+
+  Future<int> getTeamCollectionCount() async {
+    await Future.delayed(const Duration(seconds: 1));
+    // Get the documents in the collection
+    QuerySnapshot querySnapshot = await teams.get();
+    // Return the number of documents in the collection
+    return querySnapshot.size;
+  }
 }

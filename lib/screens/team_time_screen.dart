@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ycss/constants/globals.dart';
 import 'package:ycss/constants/string_constants.dart';
 import 'package:ycss/models/team_time_info.dart';
+import 'package:ycss/screens/dashboard_screen.dart';
 import 'package:ycss/screens/time_attack_team_ranking.dart';
 
 import '../constants/color_palette.dart';
@@ -305,17 +306,43 @@ class _TeamTimeState extends State<TeamTime> {
                       );
                     }
                   })),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TimeAttackTeamRanking()));
-            },
-            child: Text(
-              "Preview Team Ranking",
-              style: TextStyle(
-                  fontFamily: "TheRift", decoration: TextDecoration.underline),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 30),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const TimeAttackTeamRanking()));
+                  },
+                  child: Text(
+                    "Preview Team Ranking",
+                    style: TextStyle(
+                        fontFamily: "TheRift",
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DashboardPage()));
+                  },
+                  child: Text(
+                    "Back",
+                    style: TextStyle(
+                        fontFamily: "TheRift",
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
