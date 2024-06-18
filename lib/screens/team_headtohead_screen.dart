@@ -75,21 +75,21 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
         String losingTeamName,
         String lDocId,
         int losingTeamCurrentScore) {
-      int addedScore = 10;
-      int deductedScore = 10;
+      int addedScoreWinner = 10;
+      int addedScoreLoser = 5;
       String phTime = getLocalDateAndTime();
 
       //Update Score Winning Team
       firestoreService.updateScore(
-          wDocId, winningTeamCurrentScore + addedScore);
+          wDocId, winningTeamCurrentScore + addedScoreWinner);
 
       //Update Score Losing Team
       firestoreService.updateScore(
-          lDocId, losingTeamCurrentScore - deductedScore);
+          lDocId, losingTeamCurrentScore + addedScoreLoser);
 
       //Update Score Logging
       firestoreService.addScoreLogging(
-          "Team Head to Head: $tempTeamName - $tempTeamName2 \n\n W: $winningTeamName \n L: $losingTeamName \n\n New Score: \n $winningTeamName, from $winningTeamCurrentScore to ${winningTeamCurrentScore + addedScore} \n $losingTeamName, from $losingTeamCurrentScore to ${losingTeamCurrentScore - deductedScore} \n\n Author: $userName \n Date and Time: $phTime");
+          "Team Head to Head: $tempTeamName - $tempTeamName2 \n\n W: $winningTeamName \n L: $losingTeamName \n\n New Score: \n $winningTeamName, from $winningTeamCurrentScore to ${winningTeamCurrentScore + addedScoreWinner} \n $losingTeamName, from $losingTeamCurrentScore to ${losingTeamCurrentScore + addedScoreLoser} \n\n Author: $userName \n Date and Time: $phTime");
 
       //Notify Successful Update
       notifyUpdateSuccessful(winningTeamName);
@@ -109,7 +109,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
         showCloseIcon: true,
         title: "$winningTeamName Won?",
         desc:
-            "Please confirm to declare $winningTeamName as the winner of this match. A deduction of 10 pts will be done to $losingTeamName",
+            "Please confirm to declare $winningTeamName as the winner of this match. 5pts will only be added to $losingTeamName",
         btnOkOnPress: () {
           processScoreUpdate(winningTeamName, wDocId, winningTeamCurrentScore,
               losingTeamName, lDocId, losingTeamCurrentScore);
