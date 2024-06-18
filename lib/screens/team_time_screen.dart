@@ -60,6 +60,7 @@ class _TeamTimeState extends State<TeamTime> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: yellowOrange2,
         content: Form(
           key: _formKey,
           child: SizedBox(
@@ -70,7 +71,10 @@ class _TeamTimeState extends State<TeamTime> {
               children: [
                 Text(
                   "Enter Time for $teamName",
-                  style: const TextStyle(fontFamily: "TheRift", fontSize: 14),
+                  style: const TextStyle(
+                      fontFamily: "TheRift",
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                     height:
@@ -83,6 +87,8 @@ class _TeamTimeState extends State<TeamTime> {
                         controller: minutesTextController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           labelText: 'Minutes',
                           border: OutlineInputBorder(),
                         ),
@@ -102,6 +108,8 @@ class _TeamTimeState extends State<TeamTime> {
                         controller: secondsTextController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           labelText: 'Seconds',
                           border: OutlineInputBorder(),
                         ),
@@ -136,6 +144,8 @@ class _TeamTimeState extends State<TeamTime> {
                         },
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           labelText: 'Milliseconds',
                           border: OutlineInputBorder(),
                         ),
@@ -154,7 +164,10 @@ class _TeamTimeState extends State<TeamTime> {
                       onPressed: () {
                         Navigator.of(context).pop(); // Close the dialog
                       },
-                      child: const Text(CANCEL),
+                      child: const Text(
+                        CANCEL,
+                        style: TextStyle(fontFamily: "DIN", color: lightPink),
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -191,7 +204,10 @@ class _TeamTimeState extends State<TeamTime> {
                         // Call setState to Reload Page
                         setState(() {});
                       },
-                      child: const Text(OK),
+                      child: const Text(
+                        OK,
+                        style: TextStyle(color: lightPink, fontFamily: "DIN"),
+                      ),
                     ),
                   ],
                 ),
@@ -223,6 +239,7 @@ class _TeamTimeState extends State<TeamTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: yellowOrange2,
       body: Column(
         children: [
           const Padding(
@@ -254,58 +271,67 @@ class _TeamTimeState extends State<TeamTime> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
+                        backgroundColor: yellowOrange2,
                         content: SizedBox(
-                      height: 150,
-                      width: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Are you sure you want to Reset?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 16, fontFamily: "DIN"),
+                          height: 150,
+                          width: 200,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Are you sure you want to Reset?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16, fontFamily: "DIN"),
+                                ),
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: Text(
+                                          CANCEL,
+                                          style: TextStyle(
+                                              fontFamily: "DIN",
+                                              color: lightPink),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            globalTeamInfoList.clear();
+                                            Navigator.of(context).pop();
+                                          });
+                                        },
+                                        child: Text(
+                                          OK,
+                                          style: TextStyle(
+                                              fontFamily: "DIN",
+                                              color: lightPink),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Close the dialog
-                                    },
-                                    child: Text(
-                                      CANCEL,
-                                      style: TextStyle(fontFamily: "DIN"),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        globalTeamInfoList.clear();
-                                        Navigator.of(context).pop();
-                                      });
-                                    },
-                                    child: Text(
-                                      OK,
-                                      style: TextStyle(fontFamily: "DIN"),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )),
+                          ),
+                        )),
                   );
                 });
               },
-              icon: Icon(Icons.autorenew_rounded)),
+              icon: Icon(
+                Icons.autorenew_rounded,
+                color: lightPink,
+              )),
           Expanded(
               child: StreamBuilder<QuerySnapshot>(
                   stream: firestoreService.getTeamsStreamByID(),
@@ -347,7 +373,11 @@ class _TeamTimeState extends State<TeamTime> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(teamName),
+                                            Text(
+                                              teamName,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                             const Icon(
                                                 Icons.keyboard_arrow_right),
                                           ],
@@ -367,35 +397,39 @@ class _TeamTimeState extends State<TeamTime> {
             padding: EdgeInsets.symmetric(vertical: 30),
             child: Column(
               children: [
-                GestureDetector(
-                  onTap: () {
+                TextButton(
+                  child: Text("Preview Team Ranking",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "DIN",
+                        color: lightPink,
+                      )),
+                  onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
                                 const TimeAttackTeamRanking()));
                   },
-                  child: Text(
-                    "Preview Team Ranking",
-                    style: TextStyle(
-                        fontFamily: "TheRift",
-                        decoration: TextDecoration.underline),
-                  ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {
+                TextButton(
+                  onPressed: () {
                     Navigator.pop(context);
                   },
                   child: Text(
                     "Back",
                     style: TextStyle(
-                        fontFamily: "TheRift",
-                        decoration: TextDecoration.underline),
+                      fontSize: 14,
+                      color: lightPink,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "DIN",
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
