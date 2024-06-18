@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ycss/models/time_info_submission.dart';
 
@@ -5,6 +6,7 @@ import '../constants/color_palette.dart';
 import '../constants/globals.dart';
 import '../constants/string_constants.dart';
 import '../firebase_services/firebase_crud.dart';
+import '../firebase_services/firebase_utils.dart';
 
 class TimeAttackTeamRanking extends StatefulWidget {
   const TimeAttackTeamRanking({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class TimeAttackTeamRanking extends StatefulWidget {
 class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
   //Firebase instance
   FirestoreService firestoreService = FirestoreService();
+  final currentUser = FirebaseAuth.instance.currentUser;
 
   // Circular loading progress indicator when updating scores
   bool _isLoading = false;
@@ -57,6 +60,25 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
       });
     }
 
+    void _addTimeScoreLogging() {
+      //Logging Updated Score
+      String logTriggeredTimeAttack = "A Time Attack has been Triggered";
+      String logEachScore = "";
+      String logAuthor = currentUser!.displayName ?? 'User';
+      String phTime = getLocalDateAndTime();
+      String logDesc = "Triggered By: $logAuthor\n Date and Time: $phTime";
+
+      //Format teamName - time = Xpts, from previousScore to newCurrentScore
+      List<String> teamName = globalTeamInfoSubmissionList
+          .map((info) =>
+              '${info.teamName} - ${info.time} = ${info.receivingPoints}pts, from ${info.previousScore} to ${info.previousScore! + info.receivingPoints!}')
+          .toList();
+      logEachScore = teamName.join('\n');
+
+      firestoreService.addScoreLogging(
+          "$logTriggeredTimeAttack\n\n $logEachScore\n \n$logDesc");
+    }
+
     _updateScores() async {
       setState(() {
         _isLoading = true;
@@ -67,14 +89,29 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
             await firestoreService.getCurrentScoreByDocumentID(info.docID);
         print(
             "Team: ${info.teamName} DocID: ${info.docID} Receiving Points: ${info.receivingPoints} \n ${info.teamName}'s Current Score: $currentScore $teamIndex");
+
+        //Update current score and add it in the list
+        int index = globalTeamInfoSubmissionList
+            .indexWhere((item) => item.docID == info.docID);
+        if (index != -1) {
+          // Update the property of the item
+          globalTeamInfoSubmissionList[index].previousScore = currentScore;
+        }
+
+        //Update Score in Firebase
         firestoreService.updateScore(
             info.docID, currentScore! + info.receivingPoints!);
 
+        //For every completed score submission, we remove them in the list
         setState(() {
           globalTeamInfoList.removeWhere((item) => item.docID == info.docID);
         });
       }
 
+      //Update Score Logging
+      _addTimeScoreLogging();
+
+      //Done loading, set to false
       setState(() {
         _isLoading = false;
       });
@@ -235,7 +272,7 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
                   SizedBox(height: 16),
                   Text(
                     textAlign: TextAlign.center,
-                    "Updating Scores... Please refrain \n from exiting app or tapping other burrons.",
+                    "Updating Scores... Please refrain \n from exiting app or tapping other buttons.",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
