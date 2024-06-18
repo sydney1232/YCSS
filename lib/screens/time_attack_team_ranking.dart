@@ -1,5 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ycss/constants/key_navigation.dart';
 import 'package:ycss/models/time_info_submission.dart';
 
 import '../constants/color_palette.dart';
@@ -60,6 +62,22 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
       });
     }
 
+    void notifyUpdateFinish() {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: "Update Successful",
+        desc: "Team Scores successfully updated!",
+        btnOkOnPress: () {
+          Navigator.pushNamed(context, kTeamTimeAttackBoards);
+        },
+        btnOkColor: Colors.green,
+        btnOkText: "Done",
+      ).show();
+    }
+
     void _addTimeScoreLogging() {
       //Logging Updated Score
       String logTriggeredTimeAttack = "A Time Attack has been Triggered";
@@ -110,6 +128,9 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
 
       //Update Score Logging
       _addTimeScoreLogging();
+
+      //Notify Finish Update
+      notifyUpdateFinish();
 
       //Done loading, set to false
       setState(() {
@@ -255,6 +276,18 @@ class _TimeAttackTeamRankingState extends State<TimeAttackTeamRanking> {
                     }
                   },
                 ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Back",
+                  style: TextStyle(
+                      fontFamily: "DIN",
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
             ],
           ),
         ),
