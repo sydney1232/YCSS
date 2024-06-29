@@ -122,6 +122,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
     }
 
     return Scaffold(
+      backgroundColor: lightPink,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -131,6 +132,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
               child: const Text(
                 HEAD_TO_HEAD,
                 style: TextStyle(
+                    color: blue,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     fontFamily: "TheRift"),
@@ -208,6 +210,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
                     child: const Text(
                       DOUBLE_TAP_TO_DECLARE,
                       style: TextStyle(
+                          color: blue,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: "DIN"),
@@ -285,7 +288,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
-          backgroundColor: lightPink,
+          backgroundColor: blue,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
           onPressed: () {
@@ -294,7 +297,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
           child: Icon(
             size: 40,
             Icons.home,
-            color: blue,
+            color: lightPink,
           ),
         ),
       ),
