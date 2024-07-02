@@ -4,12 +4,13 @@ class TeamTile extends StatelessWidget {
   final String teamName;
   final VoidCallback? onAddPressed;
   final VoidCallback? onRemovePressed;
-
+  final String imageURL;
   const TeamTile({
     Key? key,
     required this.teamName,
     required this.onAddPressed,
     required this.onRemovePressed,
+    required this.imageURL,
   }) : super(key: key);
 
   @override
@@ -39,9 +40,11 @@ class TeamTile extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8),
-                    child: Icon(
-                      Icons.add_box,
-                      size: 70,
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundImage:
+                          NetworkImage(imageURL), // Use imageURL here
+                      backgroundColor: Colors.grey,
                     ),
                   ),
                   Text(

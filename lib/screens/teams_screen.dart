@@ -252,6 +252,8 @@ class _TeamScreenState extends State<TeamScreen> {
                                           children: [
                                             TeamTile(
                                               teamName: teamList[i]['teamName'],
+                                              imageURL: teamList[i]
+                                                  ['imageIcon'],
                                               onAddPressed: () =>
                                                   openDialogAddScore(
                                                       context,
@@ -273,6 +275,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                     : Expanded(
                                         child: TeamTile(
                                           teamName: teamList[i]['teamName'],
+                                          imageURL: teamList[i]['imageIcon'],
                                           onAddPressed: () =>
                                               openDialogAddScore(
                                                   context,
