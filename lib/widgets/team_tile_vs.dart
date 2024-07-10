@@ -46,7 +46,7 @@ class _TeamTileVsState extends State<TeamTileVs> {
                 radius: 40,
                 backgroundImage:
                     NetworkImage(widget.imageURL), // Use imageURL here
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.white,
               ),
             ),
             const SizedBox(height: 8),

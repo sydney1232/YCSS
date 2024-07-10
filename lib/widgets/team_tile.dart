@@ -44,7 +44,7 @@ class TeamTile extends StatelessWidget {
                       radius: 40,
                       backgroundImage:
                           NetworkImage(imageURL), // Use imageURL here
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Colors.white,
                     ),
                   ),
                   Text(

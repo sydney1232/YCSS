@@ -242,8 +242,7 @@ class _HeadToHeadPageState extends State<HeadToHeadPage> {
                           String teamText = data['teamName'];
                           int currentScore = data['score'];
 
-                          String imageURL =
-                              "https://firebasestorage.googleapis.com/v0/b/ycss-f7c20.appspot.com/o/run.png?alt=media&token=723b4dd6-367f-4fb6-9199-b0b1b7ac3957";
+                          String imageURL = data['imageIcon'];
 
                           return TeamTileSelectionVs(
                             onPress: () {
